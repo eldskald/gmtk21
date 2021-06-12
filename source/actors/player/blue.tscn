@@ -6,25 +6,26 @@
 atlas = ExtResource( 1 )
 region = Rect2( 18, 2, 12, 12 )
 
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 18, 2, 12, 12 )
+
 [sub_resource type="Curve" id=4]
 _data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 1 )
-region = Rect2( 18, 2, 12, 12 )
+region = Rect2( 34, 2, 12, 12 )
 
 [sub_resource type="Curve" id=6]
 _data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 1 )
-region = Rect2( 34, 2, 12, 12 )
-
-[sub_resource type="Curve" id=7]
-_data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
-
 [node name="BlueParticles" type="CPUParticles2D"]
 amount = 48
+lifetime = 0.8
 local_coords = false
 draw_order = 1
 texture = SubResource( 1 )
@@ -32,11 +33,22 @@ emission_shape = 1
 emission_sphere_radius = 4.0
 spread = 0.0
 gravity = Vector2( 0, -100 )
-scale_amount_curve = SubResource( 4 )
+scale_amount_curve = SubResource( 2 )
 
 [node name="BlueTrail" type="CPUParticles2D" parent="."]
 amount = 24
 lifetime = 1.25
+local_coords = false
+draw_order = 1
+texture = SubResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 2.0
+gravity = Vector2( 0, -100 )
+scale_amount_curve = SubResource( 4 )
+
+[node name="WhiteParticles" type="CPUParticles2D" parent="."]
+amount = 16
+lifetime = 0.7
 local_coords = false
 draw_order = 1
 texture = SubResource( 5 )
@@ -44,14 +56,3 @@ emission_shape = 1
 emission_sphere_radius = 2.0
 gravity = Vector2( 0, -100 )
 scale_amount_curve = SubResource( 6 )
-
-[node name="WhiteParticles" type="CPUParticles2D" parent="."]
-amount = 16
-lifetime = 0.7
-local_coords = false
-draw_order = 1
-texture = SubResource( 3 )
-emission_shape = 1
-emission_sphere_radius = 2.0
-gravity = Vector2( 0, -100 )
-scale_amount_curve = SubResource( 7 )
