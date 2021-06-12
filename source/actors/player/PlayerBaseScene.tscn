@@ -22,7 +22,7 @@ contact_monitor = true
 script = ExtResource( 1 )
 scheme_model = 1
 MAX_HORIZONTAL_VELOCITY = 200.0
-JUMP_ACCELERATION = 2000.0
+JUMP_ACCELERATION = 1000.0
 HORIZONTAL_ACCELERATION = 600.0
 HORIZONTAL_DEACCELERATION = 1000.0
 
@@ -33,7 +33,6 @@ position = Vector2( -0.26487, 9.05946 )
 shape = SubResource( 1 )
 
 [node name="JumpTimer" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

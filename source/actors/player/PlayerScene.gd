@@ -65,7 +65,7 @@ func _integrate_forces(state) -> void:
 			if can_grab() and Input.is_action_just_pressed(scheme[GRAB]):
 				grab()
 				return
-			elif Input.is_action_just_released(scheme[JUMP]) or $JumpTimer.is_stopped():
+			elif Input.is_action_just_released(scheme[JUMP]):
 				self.linear_velocity.y /= 4
 			if !is_on_ground:
 				if self.linear_velocity.y > 0:
@@ -117,7 +117,6 @@ func grab():
 	print(next_state)
 
 func jump():
-	$JumpTimer.start()
 	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION * mass)
 	next_state = JUMPING
 
