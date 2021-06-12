@@ -10,6 +10,7 @@ radius = 8.10203
 extents = Vector2( 4.79486, 1.14594 )
 
 [node name="PlayerScene" type="RigidBody2D"]
+collision_mask = 0
 mode = 2
 contacts_reported = 5
 contact_monitor = true
