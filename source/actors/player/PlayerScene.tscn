@@ -8,6 +8,11 @@ extents = Vector2( 7.75, 7.25 )
 
 [node name="PlayerScene" type="RigidBody2D"]
 script = ExtResource( 2 )
+scheme_model = 1
+MAX_HORIZONTAL_VELOCITY = 200.0
+JUMP_ACCELERATION = 1000.0
+HORIZONTAL_ACCELERATION = 600.0
+HORIZONTAL_DEACCELERATION = 900.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
