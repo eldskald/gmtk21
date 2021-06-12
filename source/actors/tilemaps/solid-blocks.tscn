@@ -16,7 +16,7 @@ void fragment() {
 	vec4 color = texture(TEXTURE, UV);
 	vec2 pix_coord = floor(SCREEN_UV / SCREEN_PIXEL_SIZE);
 	
-	if (color == bg_color) {
+	if (length(color - bg_color) < 0.01) {
 		color = texture(parallax_texture_1, mod(pix_coord + camera_position, vec2(32.0)) / vec2(32.0));
 		if (color.a == 0.0) {
 			color = texture(parallax_texture_2, mod(pix_coord, vec2(32.0)) / vec2(32.0));
@@ -24,14 +24,14 @@ void fragment() {
 		if (color.a == 0.0) {
 			color = bg_color;
 		}
-		
+
 	}
 	
 	COLOR = color;
 }
 "
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=51]
 shader = SubResource( 1 )
 shader_param/camera_position = Vector2( 0, 0 )
 shader_param/bg_color = Color( 0.266667, 0.0392157, 0.403922, 1 )
@@ -488,8 +488,7 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 0/z_index = 0
 
 [node name="SolidBlock" type="TileMap"]
-material = SubResource( 2 )
+material = SubResource( 51 )
 tile_set = SubResource( 50 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 65538, 0, 2, 65539, 0, 131072, 65540, 0, 131072, 65541, 0, 131072, 65542, 0, 3, 65544, 0, 0, 131074, 0, 65539, 131078, 0, 65539, 196610, 0, 131074, 196611, 0, 131072, 196612, 0, 131072, 196613, 0, 131072, 196614, 0, 131075, 196616, 0, 0, 327682, 0, 196608, 327683, 0, 196609, 327684, 0, 196609, 327685, 0, 196609, 327686, 0, 196610, 327688, 0, 1, 393218, 0, 262144, 393219, 0, 262145, 393220, 0, 262145, 393221, 0, 262145, 393222, 0, 262146, 393224, 0, 65539, 458754, 0, 327680, 458755, 0, 327681, 458756, 0, 327681, 458757, 0, 327681, 458758, 0, 327682, 458760, 0, 65539, 524296, 0, 65539, 589826, 0, 65536, 589827, 0, 131072, 589828, 0, 131072, 589829, 0, 131072, 589830, 0, 131072, 589831, 0, 131072, 589832, 0, 131075 )
