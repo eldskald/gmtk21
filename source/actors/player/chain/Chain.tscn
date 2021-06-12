@@ -4,18 +4,20 @@
 [ext_resource path="res://actors/player/chain/ChainSegment.tscn" type="PackedScene" id=2]
 [ext_resource path="res://actors/player/Player1Scene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://actors/player/PlayerSceneChan.tscn" type="PackedScene" id=4]
-[ext_resource path="res://actors/player/chain-particles-system.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.643137, 0.921569, 0.952941, 1, 1, 0.937255, 0.627451, 1 )
 
 [node name="Chain" type="Node2D"]
 script = ExtResource( 1 )
-chain_size = 10
+chain_size = 20
 chain_segment = ExtResource( 2 )
 player_1 = ExtResource( 3 )
 player_2 = ExtResource( 4 )
+blue = Color( 0.643137, 0.921569, 0.952941, 1 )
+orange = Color( 1, 0.937255, 0.627451, 1 )
 
-[node name="Player1End" type="PinJoint2D" parent="."]
-scale = Vector2( 0.2, 0.2 )
-bias = 0.9
-softness = 0.2
-
-[node name="ChainParticles" parent="." instance=ExtResource( 5 )]
+[node name="Line" type="Line2D" parent="."]
+width = 2.0
+gradient = SubResource( 1 )
+joint_mode = 2

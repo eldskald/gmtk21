@@ -11,8 +11,6 @@ script/source = "extends Node2D
 script = SubResource( 1 )
 
 [node name="Chain" parent="." instance=ExtResource( 2 )]
-position = Vector2( 346.403, 117.04 )
-chain_size = 20
 
 [node name="Block2" parent="." groups=[
 "ground",
