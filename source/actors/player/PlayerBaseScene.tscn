@@ -1,12 +1,18 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://actors/player/PlayerScene.gd" type="Script" id=1]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4.79486, 3.26497 )
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=2]
 radius = 7.8926
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 9.72954, 6.61646 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10, 2.64348 )
 
 [node name="PlayerScene" type="RigidBody2D"]
 collision_mask = 0
@@ -24,11 +30,22 @@ HORIZONTAL_DEACCELERATION = 1000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundDetector"]
 position = Vector2( -0.26487, 9.05946 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="JumpTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="WallDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetector"]
 shape = SubResource( 3 )
+
+[node name="CeilingDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingDetector"]
+position = Vector2( 0, -7.15137 )
+shape = SubResource( 4 )

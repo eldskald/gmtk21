@@ -17,3 +17,8 @@ script = SubResource( 1 )
 ] instance=ExtResource( 1 )]
 position = Vector2( 468.026, 292.787 )
 scale = Vector2( 20, 1 )
+
+[node name="Block" parent="." groups=[
+"ground",
+] instance=ExtResource( 1 )]
+position = Vector2( 328.436, 174.802 )
