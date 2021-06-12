@@ -1,5 +1,13 @@
 extends RigidBody2D
 
+enum {UP, DOWN, LEFT, RIGHT, JUMP}
+
+var player_idle = ["","","","",""]
+var player_one = ["up","down","left","right","jump"]
+var player_two = ["up_2","down_2","left_2","right_2","jump_2"]
+
+var player_schemes = [player_idle, player_one, player_two]
+
 export(float) var MAX_HORIZONTAL_VELOCITY
 export(float) var VERTICAL_VELOCITY
 
@@ -8,12 +16,13 @@ export(float) var HORIZONTAL_ACCELERATION
 export(float) var HORIZONTAL_DEACCELERATION
 
 enum {IDLE, MOVING, AIR}
+
 onready var next_state: int = IDLE
+onready var active : bool = true
 
 func _integrate_forces(state) -> void:
 	var is_on_ground = state.get_contact_count() > 0 and int(state.get_contact_collider_position(0).y) >= int(global_position.y)
 	var move_direction = get_move_direction()
-	print(is_on_ground)
 	match next_state:
 		IDLE:
 			if state.linear_velocity.x != 0 and is_on_ground and move_direction.x == 0:
