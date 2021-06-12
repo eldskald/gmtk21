@@ -7,10 +7,10 @@
 script/source = "extends Node2D
 "
 
-[sub_resource type="PhysicsMaterial" id=3]
+[sub_resource type="PhysicsMaterial" id=2]
 friction = 0.5
 
-[sub_resource type="PhysicsMaterial" id=2]
+[sub_resource type="PhysicsMaterial" id=3]
 rough = true
 
 [node name="World" type="Node2D"]
@@ -18,12 +18,11 @@ script = SubResource( 1 )
 
 [node name="PlayerScene" parent="." instance=ExtResource( 2 )]
 position = Vector2( 372.831, 479.49 )
-physics_material_override = SubResource( 3 )
-JUMP_ACCELERATION = 100.0
+physics_material_override = SubResource( 2 )
 
 [node name="Block2" parent="." groups=[
 "ground",
 ] instance=ExtResource( 1 )]
 position = Vector2( 482.184, 570.287 )
 scale = Vector2( 20, 1 )
-physics_material_override = SubResource( 2 )
+physics_material_override = SubResource( 3 )

@@ -47,18 +47,18 @@ func _integrate_forces(state) -> void:
 		MOVING:
 			
 			if move_direction.x != 0 and is_on_ground:
-				if sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0:
+				if Input.is_action_just_pressed(scheme[JUMP]):
+					jump()
+				elif sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0:
 					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_DEACCELERATION * mass)
 				if abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY:
 					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION * mass)
-				elif is_on_ground and Input.is_action_just_pressed(scheme[JUMP]):
-					jump()
 				else:
 					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
 			elif move_direction.x == 0:
 				next_state = IDLE
 			elif !is_on_ground:
-				next_state = JUMPING
+				next_state = AIRBORNE
 		JUMPING:
 			
 			if Input.is_action_just_released(scheme[JUMP]) or $JumpTimer.is_stopped():
@@ -91,7 +91,7 @@ func _integrate_forces(state) -> void:
 			pass
 func jump():
 	$JumpTimer.start()
-	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION)
+	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION * mass)
 	next_state = JUMPING
 
 func check_ground() -> bool:
