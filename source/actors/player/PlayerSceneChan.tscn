@@ -12,13 +12,12 @@ extents = Vector2( 4.79486, 3.26497 )
 [node name="PlayerScene" type="RigidBody2D"]
 collision_mask = 0
 mode = 2
-mass = 10.0
 contacts_reported = 5
 contact_monitor = true
 script = ExtResource( 1 )
 scheme_model = 2
-MAX_HORIZONTAL_VELOCITY = 50.0
-JUMP_ACCELERATION = 100.0
+MAX_HORIZONTAL_VELOCITY = 200.0
+JUMP_ACCELERATION = 2000.0
 HORIZONTAL_ACCELERATION = 600.0
 HORIZONTAL_DEACCELERATION = 1000.0
 
