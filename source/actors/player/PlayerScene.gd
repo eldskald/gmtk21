@@ -1,9 +1,4 @@
-[gd_scene load_steps=4 format=2]
-
-[ext_resource path="res://icon.png" type="Texture" id=1]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends RigidBody2D
+extends RigidBody2D
 
 export(float) var MAX_HORIZONTAL_VELOCITY
 export(float) var VERTICAL_VELOCITY
@@ -28,7 +23,7 @@ func _integrate_forces(state) -> void:
 					state.linear_velocity.x = 0
 			elif move_direction.x != 0:
 				next_state = MOVING
-			elif is_on_ground and Input.is_action_just_pressed(\"jump\"):
+			elif is_on_ground and Input.is_action_just_pressed("jump"):
 				jump()
 			elif !is_on_ground:
 				next_state = AIR
@@ -60,26 +55,6 @@ func jump():
 	next_state = AIR
 
 func get_move_direction() -> Vector2:
-	return Vector2(Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\"),
-	Input.get_action_strength(\"ui_down\")-Input.get_action_strength(\"ui_up\"))
-"
+	return Vector2(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
+	Input.get_action_strength("ui_down")-Input.get_action_strength("ui_up"))
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 31.6749, 32.1153 )
-
-[node name="Player" type="RigidBody2D"]
-mode = 2
-mass = 10.0
-gravity_scale = 10.0
-contacts_reported = 5
-contact_monitor = true
-script = SubResource( 1 )
-MAX_HORIZONTAL_VELOCITY = 200.0
-HORIZONTAL_ACCELERATION = 600.0
-HORIZONTAL_DEACCELERATION = 900.0
-
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 1 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
