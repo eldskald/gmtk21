@@ -17,7 +17,7 @@ export(float) var JUMP_ACCELERATION
 export(float) var HORIZONTAL_ACCELERATION
 export(float) var HORIZONTAL_DEACCELERATION
 
-enum {IDLE, MOVING, AIR}
+enum {IDLE, MOVING, JUMPING, AIRBORNE}
 
 onready var next_state: int = IDLE
 onready var active : bool = true
@@ -28,18 +28,18 @@ func _integrate_forces(state) -> void:
 	var move_direction = get_move_direction()
 	match next_state:
 		IDLE:
-			print("Moving")
+			
 			if state.linear_velocity.x != 0 and is_on_ground and move_direction.x == 0:
 				state.add_central_force(Vector2(-self.applied_force.x, 0))
 				state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION*(-sign(state.linear_velocity.x))*mass, 0))
 				if abs(state.linear_velocity.x) < 3:
 					state.linear_velocity.x = 0
-			elif move_direction.x != 0:
+			if move_direction.x != 0:
 				next_state = MOVING
 			elif is_on_ground and Input.is_action_just_pressed(scheme[JUMP]):
 				jump()
 			elif !is_on_ground:
-				next_state = AIR
+				next_state = JUMPING
 		MOVING:
 			
 			if move_direction.x != 0 and is_on_ground:
@@ -54,8 +54,24 @@ func _integrate_forces(state) -> void:
 			elif move_direction.x == 0:
 				next_state = IDLE
 			elif !is_on_ground:
-				next_state = AIR
-		AIR:
+				next_state = JUMPING
+		JUMPING:
+			if Input.is_action_just_released(scheme[JUMP]):
+				self.linear_velocity.y /= 4
+			if !is_on_ground:
+				if (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
+					state.add_central_force(Vector2(-self.applied_force.x, 0))
+					state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION/2*(-sign(state.linear_velocity.x))*mass, 0))
+				elif move_direction.x != 0 and abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY/2:
+					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION/2 * mass)
+				elif abs(state.linear_velocity.x) == MAX_HORIZONTAL_VELOCITY/2:
+					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY/2
+			else:
+				if self.linear_velocity.y > 0:
+					next_state = AIRBORNE
+				else:
+					next_state = IDLE
+		AIRBORNE:
 			if !is_on_ground:
 				if (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
 					state.add_central_force(Vector2(-self.applied_force.x, 0))
@@ -65,11 +81,12 @@ func _integrate_forces(state) -> void:
 				elif abs(state.linear_velocity.x) == MAX_HORIZONTAL_VELOCITY:
 					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
 			else:
+				self.gravity_scale = 1
 				next_state = IDLE
+			pass
 func jump():
-	print("pulou")
 	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION)
-	next_state = AIR
+	next_state = JUMPING
 
 func get_move_direction() -> Vector2:
 	return Vector2(Input.get_action_strength(scheme[RIGHT]) - Input.get_action_strength(scheme[LEFT]),
