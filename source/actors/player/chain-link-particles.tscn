@@ -3,7 +3,7 @@
 [node name="Particles" type="CPUParticles2D"]
 z_index = -1
 amount = 10
-lifetime = 0.4
+lifetime = 178.42
 local_coords = false
 emission_shape = 2
 emission_rect_extents = Vector2( 0, 10 )

@@ -26,10 +26,8 @@ onready var scheme = player_schemes[scheme_model]
 func _integrate_forces(state) -> void:
 	var is_on_ground = check_ground()
 	var move_direction = get_move_direction()
-	print(is_on_ground)
 	match next_state:
 		IDLE:
-			print("IDLE")
 			if is_on_ground and Input.is_action_just_pressed(scheme[JUMP]):
 				jump()
 			elif state.linear_velocity.x != 0 and is_on_ground and move_direction.x == 0:
@@ -42,7 +40,6 @@ func _integrate_forces(state) -> void:
 			elif !is_on_ground:
 				next_state = JUMPING
 		MOVING:
-			print("MOVING")
 			if move_direction.x != 0 and is_on_ground:
 				if Input.is_action_just_pressed(scheme[JUMP]):
 					jump()
@@ -72,7 +69,6 @@ func _integrate_forces(state) -> void:
 			else:
 				next_state = IDLE
 		AIRBORNE:
-			print("AIRBORNE")
 			self.gravity_scale = 6
 			if !is_on_ground:
 				if (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
@@ -87,7 +83,6 @@ func _integrate_forces(state) -> void:
 				next_state = IDLE
 			pass
 func jump():
-	print("JUMP")
 	$JumpTimer.start()
 	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION * mass)
 	next_state = JUMPING
