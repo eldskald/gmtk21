@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/textures/icon.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/player-particles.png" type="Texture" id=1]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
