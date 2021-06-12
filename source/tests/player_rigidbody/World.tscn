@@ -17,16 +17,13 @@ rough = true
 script = SubResource( 1 )
 
 [node name="PlayerScene" parent="." instance=ExtResource( 2 )]
-position = Vector2( 197.27, 517.245 )
+position = Vector2( 372.831, 479.49 )
 physics_material_override = SubResource( 3 )
-contacts_reported = 5
-contact_monitor = true
-sleeping = true
-linear_damp = 0.5
-MAX_HORIZONTAL_VELOCITY = 100.0
 JUMP_ACCELERATION = 100.0
 
-[node name="Block2" parent="." instance=ExtResource( 1 )]
+[node name="Block2" parent="." groups=[
+"ground",
+] instance=ExtResource( 1 )]
 position = Vector2( 482.184, 570.287 )
 scale = Vector2( 20, 1 )
 physics_material_override = SubResource( 2 )

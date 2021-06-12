@@ -23,22 +23,25 @@ onready var next_state: int = IDLE
 onready var active : bool = true
 onready var scheme = player_schemes[scheme_model]
 
+var is_on_ground: bool
+
+func _physics_process(_delta):
+	is_on_ground = check_ground()
+
 func _integrate_forces(state) -> void:
 	print(next_state)
-	var is_on_ground = state.get_contact_count() > 0 and int(state.get_contact_collider_position(0).y) >= int(global_position.y)
 	var move_direction = get_move_direction()
 	match next_state:
 		IDLE:
-			
-			if state.linear_velocity.x != 0 and is_on_ground and move_direction.x == 0:
+			if is_on_ground and Input.is_action_just_pressed(scheme[JUMP]):
+				jump()
+			elif state.linear_velocity.x != 0 and is_on_ground and move_direction.x == 0:
 				state.add_central_force(Vector2(-self.applied_force.x, 0))
 				state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION*(-sign(state.linear_velocity.x))*mass, 0))
 				if abs(state.linear_velocity.x) < 3:
 					state.linear_velocity.x = 0
 			if move_direction.x != 0:
 				next_state = MOVING
-			elif is_on_ground and Input.is_action_just_pressed(scheme[JUMP]):
-				jump()
 			elif !is_on_ground:
 				next_state = JUMPING
 		MOVING:
@@ -57,7 +60,8 @@ func _integrate_forces(state) -> void:
 			elif !is_on_ground:
 				next_state = JUMPING
 		JUMPING:
-			if Input.is_action_just_released(scheme[JUMP]):
+			
+			if Input.is_action_just_released(scheme[JUMP]) or $JumpTimer.is_stopped():
 				self.linear_velocity.y /= 4
 			if !is_on_ground:
 				if self.linear_velocity.y > 0:
@@ -86,8 +90,15 @@ func _integrate_forces(state) -> void:
 				next_state = IDLE
 			pass
 func jump():
+	$JumpTimer.start()
 	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION)
 	next_state = JUMPING
+
+func check_ground() -> bool:
+	for body in $GroundDetector.get_overlapping_bodies():
+		if body.is_in_group("ground"):
+			return true
+	return false
 
 func get_move_direction() -> Vector2:
 	return Vector2(Input.get_action_strength(scheme[RIGHT]) - Input.get_action_strength(scheme[LEFT]),
