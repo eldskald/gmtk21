@@ -24,6 +24,7 @@ onready var active : bool = true
 onready var scheme = player_schemes[scheme_model]
 
 func _integrate_forces(state) -> void:
+	print(next_state)
 	var is_on_ground = state.get_contact_count() > 0 and int(state.get_contact_collider_position(0).y) >= int(global_position.y)
 	var move_direction = get_move_direction()
 	match next_state:
@@ -59,26 +60,26 @@ func _integrate_forces(state) -> void:
 			if Input.is_action_just_released(scheme[JUMP]):
 				self.linear_velocity.y /= 4
 			if !is_on_ground:
-				if (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
+				if self.linear_velocity.y > 0:
+					next_state = AIRBORNE
+				elif (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
 					state.add_central_force(Vector2(-self.applied_force.x, 0))
 					state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION/2*(-sign(state.linear_velocity.x))*mass, 0))
 				elif move_direction.x != 0 and abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY/2:
 					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION/2 * mass)
-				elif abs(state.linear_velocity.x) == MAX_HORIZONTAL_VELOCITY/2:
+				elif abs(state.linear_velocity.x) >= MAX_HORIZONTAL_VELOCITY/2:
 					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY/2
 			else:
-				if self.linear_velocity.y > 0:
-					next_state = AIRBORNE
-				else:
-					next_state = IDLE
+				next_state = IDLE
 		AIRBORNE:
+			self.gravity_scale = 6
 			if !is_on_ground:
 				if (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
 					state.add_central_force(Vector2(-self.applied_force.x, 0))
 					state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION/2*(-sign(state.linear_velocity.x))*mass, 0))
 				elif move_direction.x != 0 and abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY:
 					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION/2 * mass)
-				elif abs(state.linear_velocity.x) == MAX_HORIZONTAL_VELOCITY:
+				elif abs(state.linear_velocity.x) >= MAX_HORIZONTAL_VELOCITY:
 					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
 			else:
 				self.gravity_scale = 1
@@ -91,4 +92,3 @@ func jump():
 func get_move_direction() -> Vector2:
 	return Vector2(Input.get_action_strength(scheme[RIGHT]) - Input.get_action_strength(scheme[LEFT]),
 	Input.get_action_strength(scheme[DOWN])-Input.get_action_strength(scheme[UP]))
-
