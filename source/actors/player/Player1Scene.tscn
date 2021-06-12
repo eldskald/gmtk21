@@ -1,9 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://actors/player/PlayerBaseScene.tscn" type="PackedScene" id=1]
-[ext_resource path="res://actors/player/orange.tscn" type="PackedScene" id=2]
+[ext_resource path="res://actors/player/blue.tscn" type="PackedScene" id=2]
 
 [node name="PlayerScene" instance=ExtResource( 1 )]
-scheme_model = 2
 
-[node name="OrangeParticles" parent="." index="0" instance=ExtResource( 2 )]
+[node name="BlueParticles" parent="." index="0" instance=ExtResource( 2 )]

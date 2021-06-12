@@ -17,7 +17,7 @@ export(float) var JUMP_ACCELERATION
 export(float) var HORIZONTAL_ACCELERATION
 export(float) var HORIZONTAL_DEACCELERATION
 
-enum {IDLE, MOVING, JUMPING, AIRBORNE}
+enum {IDLE, MOVING, JUMPING, AIRBORNE, GRABING}
 
 onready var next_state: int = IDLE
 onready var active : bool = true

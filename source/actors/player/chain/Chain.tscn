@@ -2,7 +2,7 @@
 
 [ext_resource path="res://actors/player/chain/Chain.gd" type="Script" id=1]
 [ext_resource path="res://actors/player/chain/ChainSegment.tscn" type="PackedScene" id=2]
-[ext_resource path="res://actors/player/PlayerScene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://actors/player/Player1Scene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://actors/player/PlayerSceneChan.tscn" type="PackedScene" id=4]
 [ext_resource path="res://actors/player/chain-particles-system.tscn" type="PackedScene" id=5]
 
