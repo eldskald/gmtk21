@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends RigidBody2D
+
+export(float) var HORIZONTAL_VELOCITY
+export(float) var VERTICAL_VELOCITY
+
+export(float) var HORIZONTAL_ACCELERATION
+
+enum {IDLE, WALKING, JUMPING, FALLING}
+onready var next_state: int = IDLE
+
+func _physics_process(delta):
+	match (next_state):
+		IDLE:
+			pass
+		WALKING:
+			pass
+		JUMPING:
+			pass
+		FALLING:
+			pass
+"
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31.6749, 32.1153 )
+
+[node name="Player" type="RigidBody2D"]
+mode = 3
+script = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
