@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 
 window/size/height=576
 window/stretch/mode="viewport"
+window/stretch/shrink=2.0
 
 [importer_defaults]
 
