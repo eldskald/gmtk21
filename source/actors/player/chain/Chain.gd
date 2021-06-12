@@ -9,7 +9,7 @@ signal pinjoint_array_ready
 func _ready():
 	self.connect("pinjoint_array_ready", $ChainParticles,  "_on_pinjoint_array_ready")
 	var before_segment 
-	var pinjoints = []
+	var pinjoints = [$Player1End]
 	for i in range(chain_size):
 		var chain_segment_instance:RigidBody2D = chain_segment.instance()
 		chain_segment_instance.position.x = 10 * i + 5
@@ -25,8 +25,10 @@ func _ready():
 	emit_signal("pinjoint_array_ready")
 	var player_1_instance = player_1.instance()
 	player_1_instance.position = $Player1End.position
+	self.remove_child($Player1End)
 	self.add_child(player_1_instance)
-	$Player1End.node_a = player_1_instance.get_path()
+	player_1_instance.add_child(pinjoints[0])
+	pinjoints[0].node_a = player_1_instance.get_path()
 	var player_2_instance = player_2.instance()
 	player_2_instance.position.x = 10 * chain_size + 5
 	self.add_child(player_2_instance)
