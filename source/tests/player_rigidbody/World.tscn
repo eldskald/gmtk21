@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://tests/rope/Block.tscn" type="PackedScene" id=1]
-[ext_resource path="res://actors/player/PlayerScene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://actors/player/PlayerSceneChan.tscn" type="PackedScene" id=2]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D

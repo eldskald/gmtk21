@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://actors/player/chain/Chain.gd" type="Script" id=1]
 [ext_resource path="res://actors/player/chain/ChainSegment.tscn" type="PackedScene" id=2]
+[ext_resource path="res://actors/player/PlayerScene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://actors/player/PlayerSceneChan.tscn" type="PackedScene" id=4]
 
 [node name="Chain" type="Node2D"]
 script = ExtResource( 1 )
-chain_size = 3
+chain_size = 10
 chain_segment = ExtResource( 2 )
+player_1 = ExtResource( 3 )
+player_2 = ExtResource( 4 )
 
 [node name="Player1End" type="PinJoint2D" parent="."]
 scale = Vector2( 0.2, 0.2 )
