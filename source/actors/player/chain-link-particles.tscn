@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="ChainLinkParticles" type="CPUParticles2D"]
+amount = 10
+lifetime = 0.4
+local_coords = false
+emission_shape = 2
+emission_rect_extents = Vector2( 0, 10 )
+gravity = Vector2( 0, -50 )
