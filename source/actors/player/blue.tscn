@@ -24,21 +24,20 @@ region = Rect2( 34, 2, 12, 12 )
 _data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [node name="BlueParticles" type="CPUParticles2D"]
-position = Vector2( 485, 340 )
 amount = 48
 lifetime = 0.8
 local_coords = false
 draw_order = 1
 texture = SubResource( 1 )
 emission_shape = 1
-emission_sphere_radius = 4.0
+emission_sphere_radius = 3.0
 spread = 0.0
 gravity = Vector2( 0, -100 )
 scale_amount_curve = SubResource( 2 )
 
-[node name="BlueTrail" type="CPUParticles2D" parent="."]
+[node name="TrailParticles" type="CPUParticles2D" parent="."]
 amount = 24
-lifetime = 1.25
+lifetime = 1.2
 local_coords = false
 draw_order = 1
 texture = SubResource( 3 )
@@ -47,13 +46,13 @@ emission_sphere_radius = 2.0
 gravity = Vector2( 0, -100 )
 scale_amount_curve = SubResource( 4 )
 
-[node name="WhiteParticles" type="CPUParticles2D" parent="."]
+[node name="CenterParticles" type="CPUParticles2D" parent="."]
 amount = 16
 lifetime = 0.7
 local_coords = false
 draw_order = 1
 texture = SubResource( 5 )
 emission_shape = 1
-emission_sphere_radius = 2.0
+emission_sphere_radius = 1.0
 gravity = Vector2( 0, -100 )
 scale_amount_curve = SubResource( 6 )
