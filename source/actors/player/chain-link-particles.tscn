@@ -1,9 +1,14 @@
 [gd_scene format=2]
 
-[node name="ChainLinkParticles" type="CPUParticles2D"]
+[node name="Particles" type="CPUParticles2D"]
 amount = 10
 lifetime = 0.4
 local_coords = false
 emission_shape = 2
 emission_rect_extents = Vector2( 0, 10 )
 gravity = Vector2( 0, -50 )
+
+[node name="Line" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 10, 0, -10 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
