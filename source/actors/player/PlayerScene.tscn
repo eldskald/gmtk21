@@ -7,7 +7,7 @@
 radius = 8.10203
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 4.79486, 1.14594 )
+extents = Vector2( 4.79486, 3.26497 )
 
 [node name="PlayerScene" type="RigidBody2D"]
 collision_mask = 0
@@ -17,9 +17,9 @@ contact_monitor = true
 script = ExtResource( 2 )
 scheme_model = 1
 MAX_HORIZONTAL_VELOCITY = 200.0
-JUMP_ACCELERATION = 200.0
+JUMP_ACCELERATION = 100.0
 HORIZONTAL_ACCELERATION = 600.0
-HORIZONTAL_DEACCELERATION = 900.0
+HORIZONTAL_DEACCELERATION = 1000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
