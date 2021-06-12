@@ -1,6 +1,7 @@
 [gd_scene format=2]
 
 [node name="Particles" type="CPUParticles2D"]
+z_index = -1
 amount = 10
 lifetime = 0.4
 local_coords = false
@@ -9,6 +10,7 @@ emission_rect_extents = Vector2( 0, 10 )
 gravity = Vector2( 0, -50 )
 
 [node name="Line" type="Line2D" parent="."]
+z_index = -1
 points = PoolVector2Array( 0, 10, 0, -10 )
 width = 1.0
 default_color = Color( 1, 1, 1, 1 )

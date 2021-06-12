@@ -16,6 +16,7 @@ func _ready():
 		new_link_particles.amount = link_vector.length() / 2
 		new_link_particles.get_child(0).points[0].y = link_vector.length() / 2
 		new_link_particles.get_child(0).points[1].y = -link_vector.length() / 2
+		new_link_particles.get_child(0).default_color = lerp(blue, orange, i / (pinjoints.size() - 1))
 		new_link_particles.color = lerp(blue, orange, i / (pinjoints.size() - 1))
 		self.add_child(new_link_particles)
 
@@ -28,6 +29,7 @@ func _process(_delta):
 		get_child(i).amount = link_vector.length() / 2
 		get_child(i).get_child(0).points[0].y = link_vector.length() / 2
 		get_child(i).get_child(0).points[1].y = -link_vector.length() / 2
+		get_child(i).get_child(0).default_color = lerp(blue, orange, i / (pinjoints.size() - 1))
 		get_child(i).color = lerp(blue, orange, i / (pinjoints.size() - 1))
 		
 
