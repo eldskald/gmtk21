@@ -2,38 +2,65 @@
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends RigidBody2D
 
 export(float) var HORIZONTAL_VELOCITY
 export(float) var VERTICAL_VELOCITY
 
+export(float) var JUMP_ACCELERATION
 export(float) var HORIZONTAL_ACCELERATION
 
-enum {IDLE, WALKING, JUMPING, FALLING}
+enum {IDLE, MOVING, AIR}
 onready var next_state: int = IDLE
 
-func _physics_process(delta):
-	match (next_state):
+func _integrate_forces(state) -> void:
+	var is_on_ground = state.get_contact_count() > 0 and int(state.get_contact_collider_position(0).y) >= int(global_position.y)
+	var move_direction = get_move_direction()
+	
+	match next_state:
 		IDLE:
-			pass
-		WALKING:
-			pass
-		JUMPING:
-			pass
-		FALLING:
-			pass
+			if move_direction.x:
+				next_state = MOVING
+			elif is_on_ground and Input.is_action_just_pressed(\"jump\"):
+				jump()
+		
+		MOVING:
+			if not move_direction.x:
+				next_state = IDLE
+			elif state.get_contact_count() == 0:
+				next_state = AIR
+			elif is_on_ground and Input.is_action_just_pressed(\"jump\"):
+				jump()
+			else:
+				state.linear_velocity.x = move_direction.x * HORIZONTAL_VELOCITY
+		
+		AIR:
+			if move_direction.x:
+				state.linear_velocity.x = move_direction.x * HORIZONTAL_VELOCITY
+			if  is_on_ground:
+				next_state = IDLE
+
+func jump():
+	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION)
+	next_state = AIR
+
+func get_move_direction() -> Vector2:
+	return Vector2(Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\"),
+	Input.get_action_strength(\"ui_down\")-Input.get_action_strength(\"ui_up\"))
 "
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 31.6749, 32.1153 )
 
 [node name="Player" type="RigidBody2D"]
 mode = 3
-script = SubResource( 2 )
+contacts_reported = 5
+contact_monitor = true
+script = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )

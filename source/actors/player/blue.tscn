@@ -24,6 +24,7 @@ region = Rect2( 34, 2, 12, 12 )
 _data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [node name="BlueParticles" type="CPUParticles2D"]
+position = Vector2( 485, 340 )
 amount = 48
 lifetime = 0.8
 local_coords = false
