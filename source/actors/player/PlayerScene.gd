@@ -17,13 +17,22 @@ export(float) var JUMP_ACCELERATION
 export(float) var HORIZONTAL_ACCELERATION
 export(float) var HORIZONTAL_DEACCELERATION
 
-enum {IDLE, MOVING, JUMPING, AIRBORNE, GRABBING}
+enum {IDLE, MOVING, JUMPING, AIRBORNE, GRABBING, CUTSCENE}
 
 onready var next_state: int = IDLE
 onready var active : bool = true
 onready var scheme = player_schemes[scheme_model]
 
 var grab_released:= true
+var player_1
+var player_2
+
+
+func _ready():
+	if !get_tree().get_nodes_in_group("player1").empty():
+		player_1 = get_tree().get_nodes_in_group("player1")[0]
+	if !get_tree().get_nodes_in_group("player2").empty():
+		player_2 = get_tree().get_nodes_in_group("player2")[0]
 
 func _integrate_forces(state) -> void:
 	var is_on_ground = check_ground()
@@ -98,6 +107,10 @@ func _integrate_forces(state) -> void:
 				self.gravity_scale = 1
 				next_state = IDLE
 		
+		CUTSCENE:
+			self.call_deferred("set_mode",MODE_KINEMATIC)
+			pass
+		
 #		GRABBING:
 #			if Input.is_action_just_pressed(scheme[GRAB]):
 #				print("RELEASE")
@@ -156,6 +169,19 @@ func get_move_direction() -> Vector2:
 	return Vector2(Input.get_action_strength(scheme[RIGHT]) - Input.get_action_strength(scheme[LEFT]),
 	Input.get_action_strength(scheme[DOWN])-Input.get_action_strength(scheme[UP]))
 
+func play_death():
+	var chain = get_parent()
+	if chain.has_method("hide_line"):
+		chain.hide_line()
+	player_1.call_deferred("set_mode",MODE_KINEMATIC)
+	player_2.call_deferred("set_mode",MODE_KINEMATIC)
+	player_1.play_death_anim()
+	player_2.play_death_anim()
+	yield($AnimationPlayer, "animation_finished")
+	get_tree().reload_current_scene()
+
+func play_death_anim():
+	$AnimationPlayer.play("Death")
 
 func _on_Footstool_body_entered(_body):
 	pass

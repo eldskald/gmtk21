@@ -78,7 +78,8 @@ func _ready():
 		pinjoints_array.append(new_joint)
 		$Line.add_point(new_joint.position)
 
-
+func hide_line():
+	$Line.hide()
 
 func _process(_delta):
 	for i in range(pinjoints_array.size()):
