@@ -155,6 +155,7 @@ func get_move_direction() -> Vector2:
 	Input.get_action_strength(scheme[DOWN])-Input.get_action_strength(scheme[UP]))
 
 func play_death():
+	Bgm.get_node("DeathSound").play()
 	var chain = get_parent()
 	var level = get_tree().get_nodes_in_group("level")
 	if !level.empty():

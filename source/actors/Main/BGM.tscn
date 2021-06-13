@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/music/BMGS.ogg" type="AudioStream" id=1]
+[ext_resource path="res://assets/sounds/Digital_SFX_Set/spaceTrash4.mp3" type="AudioStream" id=2]
 
-[node name="BGM" type="Node"]
+[node name="SoundList" type="Node"]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
 autoplay = true
 bus = "BGM"
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "SFX"

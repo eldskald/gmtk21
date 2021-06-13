@@ -11,5 +11,5 @@ dest_files=[ "res://.import/spaceTrash2.mp3-2e6c6e7c69179bd47ccdb0d85347db09.mp3
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
