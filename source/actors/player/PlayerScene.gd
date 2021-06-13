@@ -151,7 +151,7 @@ func get_move_direction() -> Vector2:
 	Input.get_action_strength(scheme[DOWN])-Input.get_action_strength(scheme[UP]))
 
 
-func _on_Footstool_body_entered(body):
+func _on_Footstool_body_entered(_body):
 	pass
 #	if (body.is_in_group("player2") or body.is_in_group("player1")):
 #		if body.next_state == AIRBORNE:

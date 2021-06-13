@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/textures/block-par-0.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/block-par-1.png" type="Texture" id=2]
+[ext_resource path="res://actors/camera/background.tscn" type="PackedScene" id=3]
+[ext_resource path="res://actors/player/chain/Chain.tscn" type="PackedScene" id=4]
+[ext_resource path="res://actors/tilemaps/solid-blocks.tscn" type="PackedScene" id=5]
+[ext_resource path="res://actors/BaseLevel/Camera2D.gd" type="Script" id=6]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec2 camera_position = vec2(0.0);
+uniform vec2 par1_vel = vec2(25.0, 2.0);
+uniform vec2 par2_vel = vec2(10.0, -5.0);
+uniform vec4 bg_color: hint_color;
+uniform vec4 bd1_color: hint_color;
+uniform vec4 bd2_color: hint_color;
+uniform sampler2D parallax_texture_1: hint_black;
+uniform sampler2D parallax_texture_2: hint_black;
+uniform sampler2D border_noise_texture: hint_black;
+
+void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	vec2 pix_coord = floor(SCREEN_UV / SCREEN_PIXEL_SIZE);
+	float noise = texture(border_noise_texture, SCREEN_UV + TIME * vec2(0.02)).x;
+	
+	if (length(color - bd1_color) < 0.001) {
+		color = noise >= 0.51 ? vec4(0.0) : bd1_color;
+	}
+	
+	if (length(color - bd2_color) < 0.001) {
+		color = noise >= 0.49 ? bd1_color : bg_color;
+	}
+	
+	if (length(color - bg_color) < 0.001) {
+		color = texture(parallax_texture_1, mod(pix_coord + par1_vel * TIME + camera_position / 2.0, vec2(32.0)) / vec2(32.0));
+		if (color.a == 0.0) {
+			color = texture(parallax_texture_2, mod(pix_coord + par2_vel * TIME, vec2(32.0)) / vec2(32.0));
+		}
+		if (color.a == 0.0) {
+			color = bg_color;
+		}
+
+	}
+	
+	COLOR = color;
+}
+"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+seamless = true
+noise = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/camera_position = Vector2( 0, 0 )
+shader_param/par1_vel = Vector2( 25, 2 )
+shader_param/par2_vel = Vector2( 10, -5 )
+shader_param/bg_color = Color( 0.266667, 0.0392157, 0.403922, 1 )
+shader_param/bd1_color = Color( 0.839216, 0.878431, 0.941176, 1 )
+shader_param/bd2_color = Color( 0.705882, 0.682353, 0.909804, 1 )
+shader_param/parallax_texture_1 = ExtResource( 1 )
+shader_param/parallax_texture_2 = ExtResource( 2 )
+shader_param/border_noise_texture = SubResource( 3 )
+
+[node name="BaseLevel" type="Node2D"]
+
+[node name="Sprite" parent="." instance=ExtResource( 3 )]
+
+[node name="Chain" parent="." instance=ExtResource( 4 )]
+
+[node name="SolidBlock" parent="." groups=[
+"ground",
+] instance=ExtResource( 5 )]
+material = SubResource( 4 )
+z_index = 1
+tile_data = PoolIntArray( -458768, 0, 1, -393232, 0, 65539, -327696, 0, 65539, -262160, 0, 65539, -196624, 0, 65539, -131088, 0, 65539, -65552, 0, 65539, -16, 0, 65539, 65520, 0, 65539, 15, 0, 1, 131056, 0, 65539, 65551, 0, 65539, 196592, 0, 65539, 131087, 0, 65539, 262128, 0, 65539, 196623, 0, 65539, 327664, 0, 65539, 262159, 0, 65539, 393200, 0, 65539, 327695, 0, 65539, 458736, 0, 65539, 393231, 0, 65539, 524272, 0, 65539, 458767, 0, 65539, 589808, 0, 131074, 589809, 0, 131072, 589810, 0, 131072, 589811, 0, 131072, 589812, 0, 131072, 589813, 0, 131072, 589814, 0, 131072, 589815, 0, 131072, 589816, 0, 131072, 589817, 0, 131072, 589818, 0, 131072, 589819, 0, 131072, 589820, 0, 131072, 589821, 0, 131072, 589822, 0, 131072, 589823, 0, 131072, 524288, 0, 131072, 524289, 0, 131072, 524290, 0, 131072, 524291, 0, 131072, 524292, 0, 131072, 524293, 0, 131072, 524294, 0, 131072, 524295, 0, 131072, 524296, 0, 131072, 524297, 0, 131072, 524298, 0, 131072, 524299, 0, 131072, 524300, 0, 131072, 524301, 0, 131072, 524302, 0, 131072, 524303, 0, 131075 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+smoothing_speed = 10.0
+script = ExtResource( 6 )
