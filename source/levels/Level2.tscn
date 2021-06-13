@@ -114,7 +114,7 @@ limit_right = 512
 limit_bottom = 288
 
 [node name="FinishLine" parent="." index="8"]
-position = Vector2( 448, 120 )
+position = Vector2( 432, 120 )
 
 [node name="Hole" parent="FinishLine" index="1"]
 material = SubResource( 6 )

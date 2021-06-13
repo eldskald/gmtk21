@@ -1,0 +1,177 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/textures/block-par-0.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/block-par-1.png" type="Texture" id=2]
+[ext_resource path="res://actors/BaseLevel/BaseLevel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://actors/death-ray/DeathRayBody.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec2 camera_position = vec2(0.0);
+uniform vec2 par1_vel = vec2(25.0, 2.0);
+uniform vec2 par2_vel = vec2(10.0, -5.0);
+uniform vec4 bg_color: hint_color;
+uniform vec4 bd1_color: hint_color;
+uniform vec4 bd2_color: hint_color;
+uniform sampler2D parallax_texture_1: hint_black;
+uniform sampler2D parallax_texture_2: hint_black;
+uniform sampler2D border_noise_texture: hint_black;
+
+void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	vec2 pix_coord = floor(SCREEN_UV / SCREEN_PIXEL_SIZE);
+	float noise = texture(border_noise_texture, SCREEN_UV + TIME * vec2(0.02)).x;
+	
+	if (length(color - bd1_color) < 0.001) {
+		color = noise >= 0.51 ? vec4(0.0) : bd1_color;
+	}
+	
+	if (length(color - bd2_color) < 0.001) {
+		color = noise >= 0.49 ? bd1_color : bg_color;
+	}
+	
+	if (length(color - bg_color) < 0.001) {
+		color = texture(parallax_texture_1, mod(pix_coord + par1_vel * TIME + camera_position / 2.0, vec2(32.0)) / vec2(32.0));
+		if (color.a == 0.0) {
+			color = texture(parallax_texture_2, mod(pix_coord + par2_vel * TIME, vec2(32.0)) / vec2(32.0));
+		}
+		if (color.a == 0.0) {
+			color = bg_color;
+		}
+
+	}
+	
+	COLOR = color;
+}
+"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+seamless = true
+noise = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/camera_position = Vector2( 0, 0 )
+shader_param/par1_vel = Vector2( 25, 2 )
+shader_param/par2_vel = Vector2( 10, -5 )
+shader_param/bg_color = Color( 0.266667, 0.0392157, 0.403922, 1 )
+shader_param/bd1_color = Color( 0.839216, 0.878431, 0.941176, 1 )
+shader_param/bd2_color = Color( 0.705882, 0.682353, 0.909804, 1 )
+shader_param/parallax_texture_1 = ExtResource( 1 )
+shader_param/parallax_texture_2 = ExtResource( 2 )
+shader_param/border_noise_texture = SubResource( 3 )
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform vec4 color: hint_color;
+
+void fragment() {
+	vec2 radial = UV - vec2(0.5);
+	vec4 col = vec4(0.0);
+	if (length(radial) < 0.3) {
+		col = color;
+	}
+	else {
+		vec2 unit = normalize(radial);
+		float offset = clamp(length(radial) - 0.3, 0.0, 0.2) * 5.0;
+		col = texture(SCREEN_TEXTURE, SCREEN_UV - 0.05 * sin(offset * 3.14 * 2.0 + TIME) * unit * (1.0 - offset));
+	}
+	COLOR = col;
+}
+
+
+"
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = SubResource( 5 )
+shader_param/color = Color( 1, 1, 1, 1 )
+
+[node name="BaseLevel" instance=ExtResource( 3 )]
+
+[node name="SolidBlock" parent="." index="0"]
+material = SubResource( 4 )
+tile_data = PoolIntArray( 0, 0, 196608, 1, 0, 196609, 2, 0, 196609, 3, 0, 196609, 4, 0, 196609, 5, 0, 196609, 6, 0, 196609, 7, 0, 196609, 8, 0, 196609, 9, 0, 196609, 10, 0, 196609, 11, 0, 196609, 12, 0, 196609, 13, 0, 196609, 14, 0, 196609, 15, 0, 196609, 16, 0, 196609, 17, 0, 196609, 18, 0, 196609, 19, 0, 196609, 20, 0, 196609, 21, 0, 196609, 22, 0, 196609, 23, 0, 196609, 24, 0, 196609, 25, 0, 196609, 26, 0, 196609, 27, 0, 196609, 28, 0, 196609, 29, 0, 196609, 30, 0, 196609, 31, 0, 196609, 32, 0, 196610, 65536, 0, 262144, 65537, 0, 262145, 65538, 0, 262145, 65539, 0, 262145, 65540, 0, 262145, 65541, 0, 262145, 65542, 0, 262145, 65543, 0, 262145, 65544, 0, 262145, 65545, 0, 262145, 65546, 0, 655362, 65547, 0, 327681, 65548, 0, 327681, 65549, 0, 327681, 65550, 0, 327681, 65551, 0, 655363, 65552, 0, 262145, 65553, 0, 262145, 65554, 0, 655362, 65555, 0, 327681, 65556, 0, 327681, 65557, 0, 327681, 65558, 0, 327681, 65559, 0, 327681, 65560, 0, 327681, 65561, 0, 327681, 65562, 0, 327681, 65563, 0, 655363, 65564, 0, 262145, 65565, 0, 262145, 65566, 0, 262145, 65567, 0, 262145, 65568, 0, 262146, 131072, 0, 262144, 131073, 0, 655362, 131074, 0, 327681, 131075, 0, 327681, 131076, 0, 327681, 131077, 0, 327681, 131078, 0, 327681, 131079, 0, 327681, 131080, 0, 327681, 131081, 0, 327681, 131082, 0, 327682, 131087, 0, 327680, 131088, 0, 655363, 131089, 0, 262145, 131090, 0, 262146, 131099, 0, 327680, 131100, 0, 327681, 131101, 0, 327681, 131102, 0, 655363, 131103, 0, 262145, 131104, 0, 262146, 196608, 0, 262144, 196609, 0, 262146, 196624, 0, 262144, 196625, 0, 262145, 196626, 0, 262146, 196638, 0, 262144, 196639, 0, 262145, 196640, 0, 262146, 262144, 0, 262144, 262145, 0, 262146, 262160, 0, 262144, 262161, 0, 262145, 262162, 0, 262146, 262174, 0, 262144, 262175, 0, 262145, 262176, 0, 262146, 327680, 0, 262144, 327681, 0, 262146, 327696, 0, 262144, 327697, 0, 262145, 327698, 0, 262146, 327710, 0, 327680, 327711, 0, 655363, 327712, 0, 262146, 393216, 0, 262144, 393217, 0, 262146, 393232, 0, 262144, 393233, 0, 262145, 393234, 0, 262146, 393247, 0, 262144, 393248, 0, 262146, 458752, 0, 262144, 458753, 0, 262146, 458768, 0, 262144, 458769, 0, 262145, 458770, 0, 262146, 458783, 0, 262144, 458784, 0, 262146, 524288, 0, 262144, 524289, 0, 720898, 524290, 0, 196609, 524291, 0, 196609, 524292, 0, 196609, 524293, 0, 196609, 524294, 0, 196609, 524295, 0, 196609, 524296, 0, 196609, 524297, 0, 196609, 524298, 0, 196610, 524304, 0, 327680, 524305, 0, 327681, 524306, 0, 327682, 524319, 0, 262144, 524320, 0, 262146, 589824, 0, 262144, 589825, 0, 262145, 589826, 0, 262145, 589827, 0, 262145, 589828, 0, 262145, 589829, 0, 262145, 589830, 0, 262145, 589831, 0, 262145, 589832, 0, 262145, 589833, 0, 262145, 589834, 0, 262146, 589855, 0, 262144, 589856, 0, 262146, 655360, 0, 262144, 655361, 0, 262145, 655362, 0, 262145, 655363, 0, 262145, 655364, 0, 262145, 655365, 0, 262145, 655366, 0, 262145, 655367, 0, 262145, 655368, 0, 262145, 655369, 0, 262145, 655370, 0, 262146, 655391, 0, 262144, 655392, 0, 262146, 720896, 0, 262144, 720897, 0, 262145, 720898, 0, 262145, 720899, 0, 262145, 720900, 0, 262145, 720901, 0, 262145, 720902, 0, 262145, 720903, 0, 262145, 720904, 0, 262145, 720905, 0, 262145, 720906, 0, 262146, 720927, 0, 262144, 720928, 0, 262146, 786432, 0, 262144, 786433, 0, 262145, 786434, 0, 262145, 786435, 0, 262145, 786436, 0, 262145, 786437, 0, 262145, 786438, 0, 262145, 786439, 0, 262145, 786440, 0, 262145, 786441, 0, 262145, 786442, 0, 262146, 786463, 0, 262144, 786464, 0, 262146, 851968, 0, 262144, 851969, 0, 262145, 851970, 0, 262145, 851971, 0, 262145, 851972, 0, 262145, 851973, 0, 262145, 851974, 0, 262145, 851975, 0, 262145, 851976, 0, 262145, 851977, 0, 262145, 851978, 0, 262146, 851999, 0, 262144, 852000, 0, 262146, 917504, 0, 262144, 917505, 0, 262145, 917506, 0, 262145, 917507, 0, 262145, 917508, 0, 262145, 917509, 0, 262145, 917510, 0, 262145, 917511, 0, 262145, 917512, 0, 262145, 917513, 0, 262145, 917514, 0, 262146, 917535, 0, 262144, 917536, 0, 262146, 983040, 0, 262144, 983041, 0, 262145, 983042, 0, 262145, 983043, 0, 262145, 983044, 0, 262145, 983045, 0, 262145, 983046, 0, 262145, 983047, 0, 262145, 983048, 0, 262145, 983049, 0, 262145, 983050, 0, 262146, 983071, 0, 262144, 983072, 0, 262146, 1048576, 0, 262144, 1048577, 0, 262145, 1048578, 0, 262145, 1048579, 0, 262145, 1048580, 0, 262145, 1048581, 0, 262145, 1048582, 0, 262145, 1048583, 0, 262145, 1048584, 0, 262145, 1048585, 0, 262145, 1048586, 0, 262146, 1048607, 0, 262144, 1048608, 0, 262146, 1114112, 0, 262144, 1114113, 0, 262145, 1114114, 0, 262145, 1114115, 0, 262145, 1114116, 0, 262145, 1114117, 0, 262145, 1114118, 0, 262145, 1114119, 0, 262145, 1114120, 0, 262145, 1114121, 0, 262145, 1114122, 0, 262146, 1114143, 0, 262144, 1114144, 0, 262146, 1179648, 0, 262144, 1179649, 0, 262145, 1179650, 0, 262145, 1179651, 0, 262145, 1179652, 0, 262145, 1179653, 0, 262145, 1179654, 0, 262145, 1179655, 0, 262145, 1179656, 0, 262145, 1179657, 0, 262145, 1179658, 0, 262146, 1179679, 0, 262144, 1179680, 0, 262146, 1245184, 0, 327680, 1245185, 0, 327681, 1245186, 0, 327681, 1245187, 0, 327681, 1245188, 0, 327681, 1245189, 0, 327681, 1245190, 0, 327681, 1245191, 0, 327681, 1245192, 0, 327681, 1245193, 0, 327681, 1245194, 0, 327682, 1245215, 0, 327680, 1245216, 0, 327682 )
+
+[node name="Chain" parent="." index="5"]
+blue_pos = Vector2( 48, 96 )
+
+[node name="Camera2D" parent="." index="6"]
+limit_left = 0
+limit_top = 0
+limit_right = 512
+limit_bottom = 288
+
+[node name="FinishLine" parent="." index="8"]
+position = Vector2( 456, 232 )
+
+[node name="Hole" parent="FinishLine" index="1"]
+material = SubResource( 6 )
+
+[node name="DeathRayBody" parent="." index="9" instance=ExtResource( 4 )]
+position = Vector2( 176, 280 )
+
+[node name="DeathRayBody2" parent="." index="10" instance=ExtResource( 4 )]
+position = Vector2( 192, 280 )
+
+[node name="DeathRayBody3" parent="." index="11" instance=ExtResource( 4 )]
+position = Vector2( 208, 280 )
+
+[node name="DeathRayBody4" parent="." index="12" instance=ExtResource( 4 )]
+position = Vector2( 224, 280 )
+
+[node name="DeathRayBody5" parent="." index="13" instance=ExtResource( 4 )]
+position = Vector2( 240, 280 )
+
+[node name="DeathRayBody6" parent="." index="14" instance=ExtResource( 4 )]
+position = Vector2( 256, 280 )
+
+[node name="DeathRayBody7" parent="." index="15" instance=ExtResource( 4 )]
+position = Vector2( 272, 280 )
+
+[node name="DeathRayBody8" parent="." index="16" instance=ExtResource( 4 )]
+position = Vector2( 288, 280 )
+
+[node name="DeathRayBody9" parent="." index="17" instance=ExtResource( 4 )]
+position = Vector2( 304, 280 )
+
+[node name="DeathRayBody10" parent="." index="18" instance=ExtResource( 4 )]
+position = Vector2( 320, 280 )
+
+[node name="DeathRayBody11" parent="." index="19" instance=ExtResource( 4 )]
+position = Vector2( 336, 280 )
+
+[node name="DeathRayBody12" parent="." index="20" instance=ExtResource( 4 )]
+position = Vector2( 352, 280 )
+
+[node name="DeathRayBody13" parent="." index="21" instance=ExtResource( 4 )]
+position = Vector2( 368, 280 )
+
+[node name="DeathRayBody14" parent="." index="22" instance=ExtResource( 4 )]
+position = Vector2( 384, 280 )
+
+[node name="DeathRayBody15" parent="." index="23" instance=ExtResource( 4 )]
+position = Vector2( 400, 280 )
+
+[node name="DeathRayBody16" parent="." index="24" instance=ExtResource( 4 )]
+position = Vector2( 416, 280 )
+
+[node name="DeathRayBody17" parent="." index="25" instance=ExtResource( 4 )]
+position = Vector2( 432, 280 )
+
+[node name="DeathRayBody18" parent="." index="26" instance=ExtResource( 4 )]
+position = Vector2( 448, 280 )
+
+[node name="DeathRayBody19" parent="." index="27" instance=ExtResource( 4 )]
+position = Vector2( 464, 280 )
+
+[node name="DeathRayBody20" parent="." index="28" instance=ExtResource( 4 )]
+position = Vector2( 480, 280 )
+
+[node name="DeathRayBody21" parent="." index="29" instance=ExtResource( 4 )]
+position = Vector2( 496, 280 )
