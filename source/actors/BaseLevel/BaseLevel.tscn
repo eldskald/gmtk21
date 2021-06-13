@@ -70,6 +70,7 @@ shader_param/border_noise_texture = SubResource( 3 )
 [node name="BaseLevel" type="Node2D"]
 
 [node name="Sprite" parent="." instance=ExtResource( 3 )]
+scale = Vector2( 1.05, 1.05 )
 
 [node name="Chain" parent="." instance=ExtResource( 4 )]
 
