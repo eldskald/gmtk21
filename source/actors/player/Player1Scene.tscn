@@ -9,11 +9,18 @@ extents = Vector2( 8.67007, 3.9678 )
 [node name="PlayerScene" groups=[
 "player1",
 ] instance=ExtResource( 1 )]
+collision_layer = 1
 
 [node name="BlueParticles" parent="." index="0" instance=ExtResource( 2 )]
 
 [node name="Footstool" parent="." index="1"]
 collision_mask = 2
+
+[node name="GroundDetector" parent="." index="2"]
+collision_mask = 0
+
+[node name="WallDetector" parent="." index="5"]
+collision_mask = 0
 
 [node name="Footstol" type="Area2D" parent="." index="6"]
 position = Vector2( 0.264862, -10.3298 )
@@ -22,3 +29,6 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Footstol" index="0"]
 shape = SubResource( 1 )
+
+[node name="CeilingDetector" parent="." index="7"]
+collision_mask = 0

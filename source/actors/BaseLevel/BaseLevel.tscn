@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/textures/block-par-0.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/block-par-1.png" type="Texture" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://actors/tilemaps/solid-blocks.tscn" type="PackedScene" id=5]
 [ext_resource path="res://actors/BaseLevel/Camera2D.gd" type="Script" id=6]
 [ext_resource path="res://actors/tilemaps/one-way-platform.tscn" type="PackedScene" id=7]
+[ext_resource path="res://actors/tilemaps/blue-walls.tscn" type="PackedScene" id=8]
+[ext_resource path="res://actors/tilemaps/orange-walls.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -70,9 +72,17 @@ shader_param/border_noise_texture = SubResource( 3 )
 
 [node name="BaseLevel" type="Node2D"]
 
+[node name="BlueWalls" parent="." groups=[
+"ground",
+] instance=ExtResource( 8 )]
+collision_layer = 0
+collision_mask = 2
+
 [node name="Platform" parent="." groups=[
 "ground",
 ] instance=ExtResource( 7 )]
+collision_layer = 0
+collision_mask = 3
 tile_data = PoolIntArray( 17, 0, 0, 18, 0, 1, 19, 0, 1, 20, 0, 1, 21, 0, 1, 22, 0, 2 )
 
 [node name="Sprite" parent="." instance=ExtResource( 3 )]
@@ -86,6 +96,8 @@ chain_size = 10
 ] instance=ExtResource( 5 )]
 material = SubResource( 4 )
 z_index = 1
+collision_layer = 0
+collision_mask = 7
 tile_data = PoolIntArray( -458768, 0, 1, -393232, 0, 65539, -327696, 0, 65539, -262160, 0, 65539, -196624, 0, 65539, -131088, 0, 65539, -65552, 0, 65539, -16, 0, 65539, 65520, 0, 65539, 131056, 0, 65539, 196592, 0, 65539, 262128, 0, 65539, 327664, 0, 65539, 262159, 0, 1, 393200, 0, 65539, 327694, 0, 196608, 327695, 0, 458755, 327705, 0, 196608, 327706, 0, 196609, 327707, 0, 196609, 327708, 0, 196609, 327709, 0, 196609, 327710, 0, 196609, 327711, 0, 196610, 458736, 0, 65539, 458747, 0, 196608, 458748, 0, 196609, 458749, 0, 196609, 458750, 0, 196609, 458751, 0, 196609, 393216, 0, 196609, 393217, 0, 196609, 393218, 0, 196609, 393219, 0, 196609, 393220, 0, 196609, 393221, 0, 196609, 393222, 0, 196609, 393223, 0, 196609, 393224, 0, 196609, 393225, 0, 196609, 393226, 0, 196609, 393227, 0, 196609, 393228, 0, 196609, 393229, 0, 196609, 393230, 0, 720899, 393231, 0, 262146, 393241, 0, 262144, 393242, 0, 262145, 393243, 0, 262145, 393244, 0, 262145, 393245, 0, 262145, 393246, 0, 262145, 393247, 0, 262146, 524272, 0, 65539, 524282, 0, 196608, 524283, 0, 720899, 524284, 0, 262145, 524285, 0, 262145, 524286, 0, 262145, 524287, 0, 262145, 458752, 0, 262145, 458753, 0, 262145, 458754, 0, 262145, 458755, 0, 262145, 458756, 0, 262145, 458757, 0, 262145, 458758, 0, 262145, 458759, 0, 262145, 458760, 0, 262145, 458761, 0, 262145, 458762, 0, 262145, 458763, 0, 262145, 458764, 0, 262145, 458765, 0, 262145, 458766, 0, 262145, 458767, 0, 262146, 458777, 0, 262144, 458778, 0, 262145, 458779, 0, 262145, 458780, 0, 262145, 458781, 0, 262145, 458782, 0, 262145, 458783, 0, 262146, 589808, 0, 131074, 589809, 0, 131072, 589810, 0, 131072, 589811, 0, 131072, 589812, 0, 131072, 589813, 0, 131072, 589814, 0, 131072, 589815, 0, 131072, 589816, 0, 131072, 589817, 0, 131072, 589818, 0, 458753, 589819, 0, 327681, 589820, 0, 327681, 589821, 0, 327681, 589822, 0, 327681, 589823, 0, 327681, 524288, 0, 327681, 524289, 0, 327681, 524290, 0, 327681, 524291, 0, 327681, 524292, 0, 327681, 524293, 0, 327681, 524294, 0, 327681, 524295, 0, 327681, 524296, 0, 327681, 524297, 0, 327681, 524298, 0, 327681, 524299, 0, 327681, 524300, 0, 327681, 524301, 0, 327681, 524302, 0, 327681, 524303, 0, 327682, 524313, 0, 327680, 524314, 0, 327681, 524315, 0, 327681, 524316, 0, 327681, 524317, 0, 327681, 524318, 0, 327681, 524319, 0, 327682 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -95,3 +107,9 @@ smoothing_speed = 10.0
 script = ExtResource( 6 )
 
 [node name="Orbs" type="Node2D" parent="."]
+
+[node name="OrangeWalls" parent="." groups=[
+"ground",
+] instance=ExtResource( 9 )]
+collision_layer = 0
+tile_data = PoolIntArray( 11, 0, 65536, 65547, 0, 65537, 131083, 0, 65537, 196619, 0, 65537, 262155, 0, 65537, 327691, 0, 65537, 393227, 0, 65538 )

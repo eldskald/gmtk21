@@ -6,6 +6,7 @@
 extents = Vector2( 5, 2 )
 
 [node name="ChainSegment" type="RigidBody2D"]
+collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
 

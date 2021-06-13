@@ -121,6 +121,12 @@ grab_2={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player_1"
+2d_physics/layer_2="player_2"
+2d_physics/layer_3="chain"
+
 [physics]
 
 common/enable_pause_aware_picking=true

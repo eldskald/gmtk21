@@ -18,6 +18,7 @@ extents = Vector2( 9.72954, 6.61646 )
 extents = Vector2( 10, 2.64348 )
 
 [node name="PlayerScene" type="RigidBody2D"]
+collision_layer = 0
 collision_mask = 0
 mode = 2
 contacts_reported = 5
