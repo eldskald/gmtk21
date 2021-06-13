@@ -36,6 +36,7 @@ tracks/1/keys = {
 radius = 12.1463
 
 [node name="Orb" type="Sprite"]
+z_index = -1
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 24, 24 )
