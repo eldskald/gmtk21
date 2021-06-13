@@ -41,7 +41,7 @@ void fragment() {
 	if (abs(time - length(radial)) < 0.05) {
 		float offset = (time - length(radial)) * 20.0;
 		vec2 unit = -normalize(radial);
-		color = texture(SCREEN_TEXTURE, SCREEN_UV + unit * 0.05 * sin(offset * 3.14) * (1.0 - time));
+		color = texture(SCREEN_TEXTURE, SCREEN_UV + unit * 0.02 * sin(offset * 3.14) );
 	}
 	COLOR = color;
 }"
@@ -80,7 +80,7 @@ rect = Rect2( -200, -200, 400, 400 )
 
 [node name="WaveAnimation" type="Sprite" parent="."]
 material = SubResource( 4 )
-scale = Vector2( 7, 7 )
+scale = Vector2( 12, 12 )
 texture = ExtResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
