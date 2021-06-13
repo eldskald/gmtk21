@@ -109,28 +109,15 @@ func _integrate_forces(state) -> void:
 		CUTSCENE:
 			self.call_deferred("set_mode",MODE_STATIC)
 			pass
-		
-#		GRABBING:
-#			if Input.is_action_just_pressed(scheme[GRAB]):
-#				print("RELEASE")
-#				next_state = IDLE
-#				self.call_deferred("set_mode",MODE_CHARACTER)
-#	if scheme_model == 1:
-#		print(next_state)
 
 func _input(event):
-	if next_state == GRABBING and event.is_action_pressed(scheme[GRAB]) and !event.is_echo():
+	if next_state == GRABBING and event.is_action_released(scheme[GRAB]) and !event.is_echo():
 		next_state = IDLE
 		self.call_deferred("set_mode",MODE_CHARACTER)
-		grab_released = false
-	elif event.is_action_pressed(scheme[GRAB]) and !event.is_echo():
-		grab_released = true
 
 func grab():
-	print("GRAB")
 	next_state = GRABBING
 	self.call_deferred("set_mode",MODE_STATIC)
-	print(next_state)
 
 func jump(mod :int = 1):
 	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION * mass * mod)
