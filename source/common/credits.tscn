@@ -40,36 +40,43 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-margin_right = 512.0
-margin_bottom = 288.0
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource( 4 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
-material = SubResource( 4 )
+[node name="MarginContainer" type="MarginContainer" parent="."]
 margin_right = 512.0
 margin_bottom = 288.0
-texture = ExtResource( 2 )
-expand = true
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 16.0
+margin_top = 16.0
 margin_right = 512.0
 margin_bottom = 288.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_right = 512.0
+margin_right = 496.0
 margin_bottom = 73.0
 custom_fonts/font = SubResource( 5 )
-text = "RAFAEL DE LIMA BORDONI
+text = "Rafael de Lima Bordoni
 
-PROGRAMMING, VFX, ART,
-LEVEL DESIGN"
+  Programming, VFX, art,
+  level design."
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 margin_top = 77.0
-margin_right = 512.0
+margin_right = 496.0
 margin_bottom = 116.0
 custom_styles/separator = SubResource( 6 )
 custom_constants/separation = 39
@@ -79,15 +86,17 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
 margin_top = 120.0
-margin_right = 512.0
+margin_right = 496.0
 margin_bottom = 174.0
 custom_fonts/font = SubResource( 5 )
-text = "AYRTON MAKOTO EUZEBIO SATO
+text = "Ayrton Makoto Euzebio Sato
 
-PROGRAMMING"
+  Programming."
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
 visible = false
+margin_left = 16.0
+margin_top = 16.0
 margin_right = 512.0
 margin_bottom = 288.0
 alignment = 1
