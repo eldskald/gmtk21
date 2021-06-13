@@ -126,7 +126,7 @@ func jump(mod :int = 1):
 	next_state = JUMPING
 
 func can_grab() -> bool:
-	return (check_ground() or check_walls() or check_ceiling()) and grab_released
+	return (check_ground() or check_walls() or check_ceiling() or check_orbs()) and grab_released
 
 func check_ground() -> bool:
 	for body in $GroundDetector.get_overlapping_bodies():
@@ -143,6 +143,12 @@ func check_walls() -> bool:
 func check_ceiling() -> bool:
 	for body in $CeilingDetector.get_overlapping_bodies():
 		if body.is_in_group("ground"):
+			return true
+	return false
+
+func check_orbs() -> bool:
+	for body in $WallDetector.get_overlapping_areas():
+		if body.is_in_group("orb"):
 			return true
 	return false
 

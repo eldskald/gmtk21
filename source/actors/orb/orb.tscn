@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/textures/orb.png" type="Texture" id=1]
 [ext_resource path="res://actors/orb/orb.gd" type="Script" id=2]
@@ -32,6 +32,9 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="CircleShape2D" id=2]
+radius = 12.1463
+
 [node name="Orb" type="Sprite"]
 texture = ExtResource( 1 )
 region_enabled = true
@@ -52,5 +55,14 @@ anims/shine = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Area2D" type="Area2D" parent="." groups=[
+"orb",
+]]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
