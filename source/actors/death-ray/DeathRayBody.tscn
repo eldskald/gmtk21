@@ -7,6 +7,7 @@
 extents = Vector2( 7.87547, 4.23267 )
 
 [node name="DeathRayBody" type="Area2D"]
+z_index = -1
 collision_layer = 0
 collision_mask = 3
 script = ExtResource( 2 )

@@ -113,7 +113,7 @@ blue_pos = Vector2( 64, 128 )
 "camera",
 ]]
 limit_left = 0
-limit_top = -288
+limit_top = -160
 limit_right = 512
 limit_bottom = 288
 
