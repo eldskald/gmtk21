@@ -11,5 +11,5 @@ dest_files=[ "res://.import/laser9.mp3-db1cf38ae42bf0068ae7bdd99932e5ef.mp3str" 
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

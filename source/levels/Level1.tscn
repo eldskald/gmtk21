@@ -3,7 +3,7 @@
 [ext_resource path="res://actors/BaseLevel/BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/block-par-0.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/block-par-1.png" type="Texture" id=3]
-[ext_resource path="res://assets/font/Retroscape.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/font/Press_Start_2P/PressStart2P-Regular.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -93,7 +93,6 @@ shader = SubResource( 5 )
 shader_param/color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="DynamicFont" id=7]
-size = 14
 use_mipmaps = true
 font_data = ExtResource( 4 )
 
@@ -124,14 +123,16 @@ position = Vector2( 416, -56 )
 material = SubResource( 6 )
 
 [node name="Label" type="Label" parent="." index="9"]
-margin_left = 24.0
-margin_top = 200.0
-margin_right = 464.0
-margin_bottom = 243.0
+margin_left = 16.0
+margin_top = 192.0
+margin_right = 496.0
+margin_bottom = 284.0
 custom_fonts/font = SubResource( 7 )
-text = "WASD/DPAD: MOVE ORANGE
-ARROWS/FACE BUTTONS: MOVE BLUE
-UP/R1/L1: JUMP"
+text = "WASD/DPad: move orange
+
+Arrows/Face Buttons: move blue
+
+Up/R1/L1: jump"
 __meta__ = {
 "_edit_use_anchors_": false
 }

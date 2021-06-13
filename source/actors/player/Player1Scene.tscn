@@ -77,6 +77,7 @@ emitting = false
 amount = 48
 one_shot = true
 explosiveness = 0.8
+local_coords = false
 texture = SubResource( 2 )
 spread = 180.0
 gravity = Vector2( 0, 200 )

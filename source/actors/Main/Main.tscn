@@ -28,7 +28,6 @@ shader = SubResource( 1 )
 shader_param/noise_texture = SubResource( 3 )
 
 [sub_resource type="DynamicFont" id=5]
-size = 18
 font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxEmpty" id=6]
@@ -78,29 +77,29 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
-margin_left = 112.0
-margin_top = 112.0
-margin_right = 400.0
-margin_bottom = 175.0
+margin_left = 128.0
+margin_top = 113.0
+margin_right = 384.0
+margin_bottom = 174.0
 alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_right = 288.0
-margin_bottom = 18.0
+margin_right = 256.0
+margin_bottom = 16.0
 custom_fonts/font = SubResource( 5 )
 text = "VEIL OF THE MIND"
 align = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 22.0
-margin_right = 288.0
-margin_bottom = 63.0
+margin_top = 20.0
+margin_right = 256.0
+margin_bottom = 61.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/CenterContainer/VBoxContainer/VBoxContainer"]
-margin_right = 288.0
+margin_right = 256.0
 margin_bottom = 21.0
 custom_styles/separator = SubResource( 6 )
 custom_constants/separation = 21
@@ -110,7 +109,7 @@ __meta__ = {
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_top = 25.0
-margin_right = 288.0
+margin_right = 256.0
 margin_bottom = 41.0
 custom_styles/separator = SubResource( 6 )
 custom_constants/separation = 16
@@ -120,11 +119,11 @@ __meta__ = {
 
 [node name="Text" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/VBoxContainer"]
 visible = false
-margin_top = 52.0
-margin_right = 288.0
-margin_bottom = 68.0
+margin_top = 45.0
+margin_right = 272.0
+margin_bottom = 61.0
 custom_fonts/font = SubResource( 7 )
-text = "PRESS ANY BUTTON"
+text = "Press any button."
 align = 1
 valign = 2
 __meta__ = {
