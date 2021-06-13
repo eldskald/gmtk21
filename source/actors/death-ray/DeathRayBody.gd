@@ -18,5 +18,5 @@ func _ready():
 
 func _on_DeathRayBody_body_entered(body):
 	if body.is_in_group("player1") or body.is_in_group("player2"):
-		$CollisionShape2D.disabled = true
+		$CollisionShape2D.set_deferred("disabled", true)
 		body.play_death()

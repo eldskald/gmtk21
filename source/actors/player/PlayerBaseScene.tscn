@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://actors/player/PlayerScene.gd" type="Script" id=1]
 
@@ -16,45 +16,6 @@ extents = Vector2( 9.72954, 6.61646 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 10, 2.64348 )
-
-[sub_resource type="Animation" id=6]
-resource_name = "Death"
-tracks/0/type = "value"
-tracks/0/path = NodePath("DeathParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("BlueParticles:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("OrangeParticles:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
 [node name="PlayerScene" type="RigidBody2D"]
 collision_layer = 0
@@ -102,8 +63,5 @@ shape = SubResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingDetector"]
 position = Vector2( 0, -7.15137 )
 shape = SubResource( 5 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Death = SubResource( 6 )
 
 [connection signal="body_entered" from="Footstool" to="." method="_on_Footstool_body_entered"]
