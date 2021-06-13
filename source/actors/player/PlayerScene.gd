@@ -81,8 +81,8 @@ func _integrate_forces(state) -> void:
 					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_DEACCELERATION * mass)
 				if abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY:
 					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION * mass)
-				else:
-					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
+#				else:
+#					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
 			elif move_direction.x == 0:
 				change_state(IDLE)
 			elif !is_on_ground:
@@ -105,7 +105,6 @@ func _integrate_forces(state) -> void:
 				grab()
 				return
 			elif Input.is_action_just_released(scheme[JUMP]):
-				print("next_state")
 				apply_central_impulse(Vector2.DOWN * abs(state.linear_velocity.y) * 3/4 * mass)
 			elif !is_on_ground:
 				if self.linear_velocity.y > 0:
@@ -113,9 +112,9 @@ func _integrate_forces(state) -> void:
 				elif (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
 					state.add_central_force(Vector2(-self.applied_force.x, 0))
 					state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION/2*(-sign(state.linear_velocity.x))*mass, 0))
-#				elif move_direction.x != 0 and abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY/2:
-#					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION/2 * mass)
-#				elif abs(state.linear_velocity.x) >= MAX_HORIZONTAL_VELOCITY/2:
+				elif move_direction.x != 0 and abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY:
+					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION/2 * mass)
+#				elif abs(state.linear_velocity.x) >= MAX_HORIZONTAL_VELOCITY:
 #					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
 			elif $JumpTimer.is_stopped():
 				change_state(IDLE)
@@ -141,8 +140,8 @@ func _integrate_forces(state) -> void:
 				if (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
 					state.add_central_force(Vector2(-self.applied_force.x, 0))
 					state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION/2*(-sign(state.linear_velocity.x))*mass, 0))
-#				elif move_direction.x != 0 and abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY:
-#					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION/2 * mass)
+				elif move_direction.x != 0 and abs(state.linear_velocity.x) < MAX_HORIZONTAL_VELOCITY:
+					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION * mass)
 #				elif abs(state.linear_velocity.x) >= MAX_HORIZONTAL_VELOCITY:
 #					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
 			else:
