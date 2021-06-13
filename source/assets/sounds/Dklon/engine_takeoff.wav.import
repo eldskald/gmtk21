@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/engine_takeoff.wav-75322eb191af802c8378c743643ebbfc.sample"
+
+[deps]
+
+source_file="res://assets/sounds/Dklon/engine_takeoff.wav"
+dest_files=[ "res://.import/engine_takeoff.wav-75322eb191af802c8378c743643ebbfc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
