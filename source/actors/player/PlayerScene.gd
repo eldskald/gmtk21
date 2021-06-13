@@ -28,13 +28,12 @@ var player_1
 var player_2
 
 
-func _ready():
+
+func _integrate_forces(state) -> void:
 	if !get_tree().get_nodes_in_group("player1").empty():
 		player_1 = get_tree().get_nodes_in_group("player1")[0]
 	if !get_tree().get_nodes_in_group("player2").empty():
 		player_2 = get_tree().get_nodes_in_group("player2")[0]
-
-func _integrate_forces(state) -> void:
 	var is_on_ground = check_ground()
 	var move_direction = get_move_direction()
 	
