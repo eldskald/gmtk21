@@ -43,6 +43,9 @@ tracks/1/keys = {
 ] instance=ExtResource( 1 )]
 collision_layer = 2
 scheme_model = 2
+MAX_HORIZONTAL_VELOCITY = 75.0
+JUMP_ACCELERATION = 800.0
+HORIZONTAL_ACCELERATION = 400.0
 
 [node name="OrangeParticles" parent="." index="0" instance=ExtResource( 2 )]
 
