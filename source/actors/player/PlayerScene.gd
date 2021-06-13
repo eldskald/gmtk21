@@ -108,7 +108,7 @@ func _integrate_forces(state) -> void:
 				next_state = IDLE
 		
 		CUTSCENE:
-			self.call_deferred("set_mode",MODE_KINEMATIC)
+			self.call_deferred("set_mode",MODE_STATIC)
 			pass
 		
 #		GRABBING:
@@ -121,7 +121,6 @@ func _integrate_forces(state) -> void:
 
 func _input(event):
 	if next_state == GRABBING and event.is_action_pressed(scheme[GRAB]) and !event.is_echo():
-		print("RELEASE")
 		next_state = IDLE
 		self.call_deferred("set_mode",MODE_CHARACTER)
 		grab_released = false

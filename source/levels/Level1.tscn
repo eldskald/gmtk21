@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://actors/BaseLevel/BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/block-par-0.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/block-par-1.png" type="Texture" id=3]
-[ext_resource path="res://actors/death-ray/DeathRayBody.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -97,11 +96,8 @@ shader_param/color = Color( 1, 1, 1, 1 )
 [node name="SolidBlock" parent="." index="4"]
 material = SubResource( 4 )
 
-[node name="DeathRayBody" parent="." index="8" instance=ExtResource( 4 )]
-position = Vector2( 202, 79 )
-
-[node name="FinishLine" parent="." index="9"]
-position = Vector2( 356, 93.5 )
+[node name="FinishLine" parent="." index="8"]
+position = Vector2( 234.5, 30.5 )
 
 [node name="Hole" parent="FinishLine" index="1"]
 material = SubResource( 6 )
