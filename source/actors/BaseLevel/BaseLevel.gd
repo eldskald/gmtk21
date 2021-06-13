@@ -15,3 +15,7 @@ func _on_FinishLine_body_entered(body):
 
 func death_animation() -> void:
 	$Camera2D/AnimationPlayer.play("shake")
+
+func _input(event):
+	if event.is_action("reset") and event.is_pressed() and !event.is_echo():
+		get_tree().reload_current_scene()

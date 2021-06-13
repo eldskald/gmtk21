@@ -9,6 +9,7 @@ var player_two = ["up_2","down_2","left_2","right_2","jump_2", "grab_2"]
 var player_schemes = [player_idle, player_one, player_two]
 
 export(int) var scheme_model
+export(bool) var dbg
 
 export(float) var MAX_HORIZONTAL_VELOCITY
 export(float) var VERTICAL_VELOCITY
@@ -19,7 +20,7 @@ export(float) var HORIZONTAL_DEACCELERATION
 
 enum {IDLE, MOVING, JUMPING, AIRBORNE, GRABBING, CUTSCENE}
 
-onready var next_state: int = IDLE
+onready var next_state: int = IDLE setget change_state
 onready var active : bool = true
 onready var scheme = player_schemes[scheme_model]
 
@@ -27,6 +28,10 @@ var grab_released:= true
 var player_1
 var player_2
 
+func change_state(new_value: int):
+	if self.dbg:
+		print(new_value)
+	next_state = new_value
 
 
 func _integrate_forces(state) -> void:
@@ -36,7 +41,6 @@ func _integrate_forces(state) -> void:
 		player_2 = get_tree().get_nodes_in_group("player2")[0]
 	var is_on_ground = check_ground()
 	var move_direction = get_move_direction()
-	
 	
 	match next_state:
 		IDLE:
@@ -51,9 +55,9 @@ func _integrate_forces(state) -> void:
 				if abs(state.linear_velocity.x) < 3:
 					state.linear_velocity.x = 0
 			elif move_direction.x != 0:
-				next_state = MOVING
+				change_state(MOVING)
 			elif !is_on_ground:
-				next_state = AIRBORNE
+				change_state(AIRBORNE)
 		
 #			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 #				grab()
@@ -80,9 +84,9 @@ func _integrate_forces(state) -> void:
 				else:
 					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
 			elif move_direction.x == 0:
-				next_state = IDLE
+				change_state(IDLE)
 			elif !is_on_ground:
-				next_state = AIRBORNE
+				change_state(AIRBORNE)
 			
 #			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 #				grab()
@@ -101,11 +105,11 @@ func _integrate_forces(state) -> void:
 				grab()
 				return
 			elif Input.is_action_just_released(scheme[JUMP]):
-				print(next_state)
-				apply_central_impulse(Vector2(0, state.linear_velocity.y * 3 / 4) * mass)
-			elif !is_on_ground and $JumpTimer.is_stopped():
+				print("next_state")
+				apply_central_impulse(Vector2.DOWN * abs(state.linear_velocity.y) * 3/4 * mass)
+			elif !is_on_ground:
 				if self.linear_velocity.y > 0:
-					next_state = AIRBORNE
+					change_state(AIRBORNE)
 				elif (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
 					state.add_central_force(Vector2(-self.applied_force.x, 0))
 					state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION/2*(-sign(state.linear_velocity.x))*mass, 0))
@@ -113,8 +117,8 @@ func _integrate_forces(state) -> void:
 					add_central_force(Vector2(move_direction.x, 0) * HORIZONTAL_ACCELERATION/2 * mass)
 				elif abs(state.linear_velocity.x) >= MAX_HORIZONTAL_VELOCITY/2:
 					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY/2
-			else:
-				next_state = IDLE
+			elif $JumpTimer.is_stopped():
+				change_state(IDLE)
 			
 #			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 #				grab()
@@ -158,17 +162,17 @@ func _integrate_forces(state) -> void:
 
 func _input(event):
 	if next_state == GRABBING and event.is_action_released(scheme[GRAB]) and !event.is_echo():
-		next_state = IDLE
+		change_state(IDLE)
 		self.call_deferred("set_mode",MODE_CHARACTER)
 
 func grab():
-	next_state = GRABBING
+	change_state(GRABBING)
 	self.call_deferred("set_mode",MODE_STATIC)
 
 func jump(mod :int = 1):
 	$JumpTimer.start()
 	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION * mass * mod)
-	next_state = JUMPING
+	change_state(JUMPING)
 
 func can_grab() -> bool:
 	return (check_ground() or check_walls() or check_ceiling() or check_orbs()) and grab_released

@@ -130,7 +130,6 @@ script = ExtResource( 11 )
 material = SubResource( 4 )
 collision_layer = 0
 collision_mask = 7
-tile_data = PoolIntArray(  )
 
 [node name="BlueWalls" parent="." groups=[
 "ground",
@@ -156,7 +155,6 @@ collision_mask = 3
 scale = Vector2( 1.05, 1.05 )
 
 [node name="Chain" parent="." instance=ExtResource( 4 )]
-chain_size = 10
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

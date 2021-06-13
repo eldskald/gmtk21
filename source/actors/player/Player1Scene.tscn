@@ -45,6 +45,7 @@ tracks/1/keys = {
 "player1",
 ] instance=ExtResource( 1 )]
 collision_layer = 1
+dbg = true
 
 [node name="BlueParticles" parent="." index="0" instance=ExtResource( 2 )]
 
