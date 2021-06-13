@@ -22,4 +22,4 @@ func _on_TextTimer_timeout():
 
 func _input(event):
 	if (event is InputEventJoypadButton or event is InputEventKey) and !event.is_echo():
-		print("Ola")
+		LevelsHolder.load_level()

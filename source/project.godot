@@ -13,6 +13,10 @@ config_version=4
 config/name="gmtk21"
 config/icon="res://icon.png"
 
+[autoload]
+
+LevelsHolder="*res://actors/Main/LevelsHolder.tscn"
+
 [display]
 
 window/size/height=576

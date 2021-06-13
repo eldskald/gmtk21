@@ -27,11 +27,11 @@ noise = SubResource( 2 )
 shader = SubResource( 1 )
 shader_param/noise_texture = SubResource( 3 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=5]
 size = 18
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxEmpty" id=5]
+[sub_resource type="StyleBoxEmpty" id=6]
 
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 3 )
@@ -87,7 +87,7 @@ alignment = 1
 [node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer"]
 margin_right = 263.0
 margin_bottom = 27.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 5 )
 text = "VEIL OF THE MIND"
 align = 1
 
@@ -102,7 +102,7 @@ __meta__ = {
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_right = 263.0
 margin_bottom = 21.0
-custom_styles/separator = SubResource( 5 )
+custom_styles/separator = SubResource( 6 )
 custom_constants/separation = 21
 __meta__ = {
 "_edit_use_anchors_": false
@@ -112,7 +112,7 @@ __meta__ = {
 margin_top = 25.0
 margin_right = 263.0
 margin_bottom = 48.0
-custom_styles/separator = SubResource( 5 )
+custom_styles/separator = SubResource( 6 )
 custom_constants/separation = 23
 __meta__ = {
 "_edit_use_anchors_": false
