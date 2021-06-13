@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/textures/block-par-0.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/block-par-1.png" type="Texture" id=2]
@@ -72,35 +72,25 @@ shader_param/parallax_texture_1 = ExtResource( 1 )
 shader_param/parallax_texture_2 = ExtResource( 2 )
 shader_param/border_noise_texture = SubResource( 3 )
 
-[sub_resource type="CircleShape2D" id=5]
-radius = 30.5164
-
-[sub_resource type="Shader" id=6]
-code = "shader_type canvas_item;
-
-uniform vec4 color: hint_color;
-
-void fragment() {
-	vec2 radial = UV - vec2(0.5);
-	vec4 col = vec4(0.0);
-	if (length(radial) < 0.3) {
-		col = color;
-	}
-	else {
-		vec2 unit = normalize(radial);
-		float offset = clamp(length(radial) - 0.3, 0.0, 0.2) * 5.0;
-		col = texture(SCREEN_TEXTURE, SCREEN_UV - 0.05 * sin(offset * 3.14 * 2.0) * unit);
-	}
-	COLOR = col;
+[sub_resource type="Animation" id=5]
+resource_name = "shake"
+length = 0.6
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 32, 0 ), Vector2( -16, 0 ), Vector2( 0, 0 ) ]
 }
 
-
-"
-
-[sub_resource type="ShaderMaterial" id=7]
-resource_local_to_scene = true
-shader = SubResource( 6 )
-shader_param/color = Color( 1, 1, 1, 1 )
+[sub_resource type="CircleShape2D" id=6]
+radius = 30.5164
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource( 11 )
@@ -138,6 +128,9 @@ smoothing_enabled = true
 smoothing_speed = 10.0
 script = ExtResource( 6 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
+anims/shake = SubResource( 5 )
+
 [node name="Orbs" type="Node2D" parent="."]
 
 [node name="OrangeWalls" parent="." groups=[
@@ -152,9 +145,8 @@ collision_layer = 0
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FinishLine"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="Hole" parent="FinishLine" instance=ExtResource( 10 )]
-material = SubResource( 7 )
 
 [connection signal="body_entered" from="FinishLine" to="." method="_on_FinishLine_body_entered"]
