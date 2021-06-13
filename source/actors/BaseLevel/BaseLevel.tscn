@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/textures/block-par-0.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/block-par-1.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://actors/tilemaps/orange-walls.tscn" type="PackedScene" id=9]
 [ext_resource path="res://actors/hole/hole.tscn" type="PackedScene" id=10]
 [ext_resource path="res://actors/BaseLevel/BaseLevel.gd" type="Script" id=11]
+[ext_resource path="res://actors/death-ray/DeathRayBody.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -92,7 +93,36 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=6]
 radius = 30.5164
 
-[node name="BaseLevel" type="Node2D"]
+[sub_resource type="Shader" id=7]
+code = "shader_type canvas_item;
+
+uniform vec4 color: hint_color;
+
+void fragment() {
+	vec2 radial = UV - vec2(0.5);
+	vec4 col = vec4(0.0);
+	if (length(radial) < 0.3) {
+		col = color;
+	}
+	else {
+		vec2 unit = normalize(radial);
+		float offset = clamp(length(radial) - 0.3, 0.0, 0.2) * 5.0;
+		col = texture(SCREEN_TEXTURE, SCREEN_UV - 0.05 * sin(offset * 3.14 * 2.0 + TIME) * unit * (1.0 - offset));
+	}
+	COLOR = col;
+}
+
+
+"
+
+[sub_resource type="ShaderMaterial" id=8]
+resource_local_to_scene = true
+shader = SubResource( 7 )
+shader_param/color = Color( 1, 1, 1, 1 )
+
+[node name="BaseLevel" type="Node2D" groups=[
+"level",
+]]
 script = ExtResource( 11 )
 
 [node name="BlueWalls" parent="." groups=[
@@ -140,7 +170,7 @@ collision_layer = 0
 tile_data = PoolIntArray( 11, 0, 65536, 65547, 0, 65537, 131083, 0, 65537, 196619, 0, 65537, 262155, 0, 65537, 327691, 0, 65537, 393227, 0, 65538 )
 
 [node name="FinishLine" type="Area2D" parent="."]
-position = Vector2( 246.5, 25 )
+position = Vector2( 403, 59 )
 collision_layer = 0
 collision_mask = 3
 
@@ -148,5 +178,9 @@ collision_mask = 3
 shape = SubResource( 6 )
 
 [node name="Hole" parent="FinishLine" instance=ExtResource( 10 )]
+material = SubResource( 8 )
+
+[node name="DeathRayBody" parent="FinishLine" instance=ExtResource( 12 )]
+position = Vector2( -198, 23.5 )
 
 [connection signal="body_entered" from="FinishLine" to="." method="_on_FinishLine_body_entered"]

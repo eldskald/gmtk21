@@ -170,6 +170,10 @@ func get_move_direction() -> Vector2:
 
 func play_death():
 	var chain = get_parent()
+	var level = get_tree().get_nodes_in_group("level")
+	if !level.empty():
+		level = level[0]
+		level.death_animation()
 	if chain.has_method("hide_line"):
 		chain.hide_line()
 	player_1.call_deferred("set_mode",MODE_KINEMATIC)

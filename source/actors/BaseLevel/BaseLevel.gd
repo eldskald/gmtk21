@@ -11,3 +11,6 @@ func _on_FinishLine_body_entered(body):
 		$FinishLine/Hole/AnimationPlayer.play("ripple")
 		yield($FinishLine/Hole/AnimationPlayer, "animation_finished")
 		LevelsHolder.load_level()
+
+func death_animation() -> void:
+	$Camera2D/AnimationPlayer.play("shake")
