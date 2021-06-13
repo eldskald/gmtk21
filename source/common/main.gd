@@ -2,6 +2,8 @@ extends Node
 
 onready var title_label = $MarginContainer/CenterContainer/VBoxContainer/Label
 
+var ready: bool = false
+
 func _ready():
 	$MarginContainer/CenterContainer/VBoxContainer/Label.modulate.a = 0
 	$IntroTimer.start()
@@ -21,5 +23,7 @@ func _on_TextTimer_timeout():
 		$TextTimer.start(0.4)
 
 func _input(event):
-	if (event is InputEventJoypadButton or event is InputEventKey) and !event.is_echo():
+	if (event is InputEventJoypadButton or event is InputEventKey) and !event.is_echo() and LevelsHolder.ready:
 		LevelsHolder.load_level()
+	else:
+		pass

@@ -101,8 +101,9 @@ func _integrate_forces(state) -> void:
 				grab()
 				return
 			elif Input.is_action_just_released(scheme[JUMP]):
+				print(next_state)
 				apply_central_impulse(Vector2(0, state.linear_velocity.y * 3 / 4) * mass)
-			elif !is_on_ground:
+			elif !is_on_ground and $JumpTimer.is_stopped():
 				if self.linear_velocity.y > 0:
 					next_state = AIRBORNE
 				elif (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
@@ -165,6 +166,7 @@ func grab():
 	self.call_deferred("set_mode",MODE_STATIC)
 
 func jump(mod :int = 1):
+	$JumpTimer.start()
 	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION * mass * mod)
 	next_state = JUMPING
 
