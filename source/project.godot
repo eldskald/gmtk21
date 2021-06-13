@@ -19,6 +19,12 @@ config/icon="res://icon.png"
 LevelsHolder="*res://actors/Main/LevelsHolder.tscn"
 Bgm="*res://actors/Main/BGM.tscn"
 
+[debug]
+
+gdscript/warnings/unused_variable=false
+gdscript/warnings/narrowing_conversion=false
+gdscript/warnings/return_value_discarded=false
+
 [display]
 
 window/size/height=576
