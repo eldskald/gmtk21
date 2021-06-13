@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://common/levels_holder.gd" type="Script" id=1]
 [ext_resource path="res://levels/Level3.tscn" type="PackedScene" id=2]
@@ -7,10 +7,11 @@
 [ext_resource path="res://common/credits.tscn" type="PackedScene" id=5]
 [ext_resource path="res://levels/Level4.tscn" type="PackedScene" id=6]
 [ext_resource path="res://levels/Level5.tscn" type="PackedScene" id=7]
+[ext_resource path="res://levels/Level6.tscn" type="PackedScene" id=8]
 
 [node name="LevelsHolder" type="Node"]
 script = ExtResource( 1 )
-levels = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 7 ) ]
+levels = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ]
 credits = ExtResource( 5 )
 
 [node name="Timer" type="Timer" parent="."]
