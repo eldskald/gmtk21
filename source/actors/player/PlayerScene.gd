@@ -168,7 +168,7 @@ func play_death():
 	player_1.play_death_anim()
 	player_2.play_death_anim()
 	yield($AnimationPlayer, "animation_finished")
-	get_tree().reload_current_scene()
+	get_tree().call_deferred("reload_current_scene")
 
 func play_death_anim():
 	$AnimationPlayer.play("Death")
