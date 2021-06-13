@@ -2,7 +2,7 @@ extends RigidBody2D
 
 enum {UP, DOWN, LEFT, RIGHT, JUMP, GRAB}
 
-var player_idle = ["","","","",""]
+var player_idle = ["","","","","",""]
 var player_one = ["up","down","left","right","jump","grab"]
 var player_two = ["up_2","down_2","left_2","right_2","jump_2", "grab_2"]
 
@@ -66,7 +66,7 @@ func _integrate_forces(state) -> void:
 				grab()
 				return
 			elif Input.is_action_just_released(scheme[JUMP]):
-				self.linear_velocity.y /= 4
+				self.linear_velocity.y /= 16
 			if !is_on_ground:
 				if self.linear_velocity.y > 0:
 					next_state = AIRBORNE
@@ -116,8 +116,8 @@ func grab():
 	self.call_deferred("set_mode",MODE_STATIC)
 	print(next_state)
 
-func jump():
-	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION * mass)
+func jump(mod :int = 1):
+	apply_central_impulse(Vector2.UP * JUMP_ACCELERATION * mass * mod)
 	next_state = JUMPING
 
 func can_grab() -> bool:
@@ -144,3 +144,10 @@ func check_ceiling() -> bool:
 func get_move_direction() -> Vector2:
 	return Vector2(Input.get_action_strength(scheme[RIGHT]) - Input.get_action_strength(scheme[LEFT]),
 	Input.get_action_strength(scheme[DOWN])-Input.get_action_strength(scheme[UP]))
+
+
+func _on_Footstool_body_entered(body):
+	pass
+#	if (body.is_in_group("player2") or body.is_in_group("player1")):
+#		if body.next_state == AIRBORNE:
+#			body.jump(2)

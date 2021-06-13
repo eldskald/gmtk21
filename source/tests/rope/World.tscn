@@ -1,24 +1,86 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://tests/rope/Block.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/textures/block-par-0.png" type="Texture" id=1]
 [ext_resource path="res://actors/player/chain/Chain.tscn" type="PackedScene" id=2]
+[ext_resource path="res://actors/tilemaps/solid-blocks.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/textures/block-par-1.png" type="Texture" id=4]
+[ext_resource path="res://actors/camera/background.tscn" type="PackedScene" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 "
 
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform vec2 camera_position = vec2(0.0);
+uniform vec2 par1_vel = vec2(25.0, 2.0);
+uniform vec2 par2_vel = vec2(10.0, -5.0);
+uniform vec4 bg_color: hint_color;
+uniform vec4 bd1_color: hint_color;
+uniform vec4 bd2_color: hint_color;
+uniform sampler2D parallax_texture_1: hint_black;
+uniform sampler2D parallax_texture_2: hint_black;
+uniform sampler2D border_noise_texture: hint_black;
+
+void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	vec2 pix_coord = floor(SCREEN_UV / SCREEN_PIXEL_SIZE);
+	float noise = texture(border_noise_texture, SCREEN_UV + TIME * vec2(0.02)).x;
+	
+	if (length(color - bd1_color) < 0.001) {
+		color = noise >= 0.51 ? vec4(0.0) : bd1_color;
+	}
+	
+	if (length(color - bd2_color) < 0.001) {
+		color = noise >= 0.49 ? bd1_color : bg_color;
+	}
+	
+	if (length(color - bg_color) < 0.001) {
+		color = texture(parallax_texture_1, mod(pix_coord + par1_vel * TIME + camera_position / 2.0, vec2(32.0)) / vec2(32.0));
+		if (color.a == 0.0) {
+			color = texture(parallax_texture_2, mod(pix_coord + par2_vel * TIME, vec2(32.0)) / vec2(32.0));
+		}
+		if (color.a == 0.0) {
+			color = bg_color;
+		}
+
+	}
+	
+	COLOR = color;
+}
+"
+
+[sub_resource type="OpenSimplexNoise" id=3]
+
+[sub_resource type="NoiseTexture" id=4]
+seamless = true
+noise = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/camera_position = Vector2( 0, 0 )
+shader_param/par1_vel = Vector2( 25, 2 )
+shader_param/par2_vel = Vector2( 10, -5 )
+shader_param/bg_color = Color( 0.266667, 0.0392157, 0.403922, 1 )
+shader_param/bd1_color = Color( 0.839216, 0.878431, 0.941176, 1 )
+shader_param/bd2_color = Color( 0.705882, 0.682353, 0.909804, 1 )
+shader_param/parallax_texture_1 = ExtResource( 1 )
+shader_param/parallax_texture_2 = ExtResource( 4 )
+shader_param/border_noise_texture = SubResource( 4 )
+
 [node name="World" type="Node2D"]
 script = SubResource( 1 )
 
+[node name="SolidBlock" parent="." groups=[
+"ground",
+] instance=ExtResource( 3 )]
+material = SubResource( 5 )
+tile_data = PoolIntArray( -1, 0, 2, -65536, 0, 131072, -65535, 0, 131072, -65534, 0, 131072, -65533, 0, 131072, -65532, 0, 131072, -65531, 0, 131072, -65530, 0, 131072, -65529, 0, 131072, -65528, 0, 131072, -65527, 0, 131072, -65526, 0, 131072, -65525, 0, 131072, -65524, 0, 131072, -65523, 0, 131072, -65522, 0, 131072, -65521, 0, 131072, -65520, 0, 131072, -65519, 0, 131072, -65518, 0, 131072, -65517, 0, 131072, -65516, 0, 131072, -65515, 0, 131072, -65514, 0, 131072, -65513, 0, 131072, -65512, 0, 131072, -65511, 0, 131072, -65510, 0, 131072, -65509, 0, 131072, -65508, 0, 131072, -65507, 0, 131072, -65506, 0, 131072, -65505, 0, 131072, -65504, 0, 3, 65535, 0, 65539, 32, 0, 65539, 131071, 0, 65539, 65568, 0, 65539, 196607, 0, 65539, 131104, 0, 65539, 262143, 0, 65539, 196617, 0, 65536, 196618, 0, 65538, 196622, 0, 65536, 196623, 0, 65538, 196627, 0, 65536, 196628, 0, 65538, 196632, 0, 65536, 196633, 0, 65538, 196640, 0, 65539, 327679, 0, 65539, 262176, 0, 65539, 393215, 0, 65539, 327712, 0, 65539, 458751, 0, 131074, 393216, 0, 655360, 393217, 0, 131072, 393218, 0, 655360, 393219, 0, 131072, 393220, 0, 655360, 393221, 0, 131072, 393222, 0, 3, 393248, 0, 65539, 458752, 0, 65539, 458754, 0, 131073, 458756, 0, 131073, 458758, 0, 65539, 458784, 0, 65539, 524288, 0, 720896, 524289, 0, 65538, 524291, 0, 0, 524293, 0, 65536, 524294, 0, 655361, 524320, 0, 65539, 589824, 0, 65539, 589826, 0, 0, 589828, 0, 0, 589830, 0, 65539, 589852, 0, 196608, 589853, 0, 196609, 589854, 0, 196609, 589855, 0, 196609, 589856, 0, 458755, 655360, 0, 720896, 655361, 0, 65538, 655363, 0, 0, 655365, 0, 65536, 655366, 0, 655361, 655388, 0, 262144, 655389, 0, 262145, 655390, 0, 262145, 655391, 0, 262145, 655392, 0, 262146, 720896, 0, 65539, 720898, 0, 0, 720900, 0, 0, 720902, 0, 65539, 720924, 0, 262144, 720925, 0, 262145, 720926, 0, 262145, 720927, 0, 262145, 720928, 0, 262146, 786432, 0, 720896, 786433, 0, 65538, 786435, 0, 0, 786437, 0, 65536, 786438, 0, 655361, 786460, 0, 262144, 786461, 0, 262145, 786462, 0, 262145, 786463, 0, 262145, 786464, 0, 262146, 851968, 0, 65539, 851970, 0, 0, 851972, 0, 0, 851974, 0, 65539, 851996, 0, 262144, 851997, 0, 262145, 851998, 0, 262145, 851999, 0, 262145, 852000, 0, 262146, 917504, 0, 720896, 917505, 0, 65538, 917507, 0, 0, 917509, 0, 65536, 917510, 0, 655361, 917531, 0, 196608, 917532, 0, 720899, 917533, 0, 262145, 917534, 0, 262145, 917535, 0, 262145, 917536, 0, 262146, 983040, 0, 65539, 983042, 0, 0, 983044, 0, 0, 983046, 0, 65539, 983067, 0, 262144, 983068, 0, 262145, 983069, 0, 262145, 983070, 0, 262145, 983071, 0, 262145, 983072, 0, 262146, 1048576, 0, 720896, 1048577, 0, 65538, 1048579, 0, 0, 1048581, 0, 65536, 1048582, 0, 655361, 1048603, 0, 262144, 1048604, 0, 262145, 1048605, 0, 262145, 1048606, 0, 262145, 1048607, 0, 262145, 1048608, 0, 262146, 1114112, 0, 65539, 1114114, 0, 1, 1114116, 0, 1, 1114118, 0, 65539, 1114139, 0, 262144, 1114140, 0, 262145, 1114141, 0, 262145, 1114142, 0, 262145, 1114143, 0, 262145, 1114144, 0, 262146, 1179648, 0, 131074, 1179649, 0, 131072, 1179650, 0, 720897, 1179651, 0, 131072, 1179652, 0, 720897, 1179653, 0, 131072, 1179654, 0, 720897, 1179655, 0, 131072, 1179656, 0, 131072, 1179657, 0, 131072, 1179658, 0, 131072, 1179659, 0, 131072, 1179660, 0, 131072, 1179661, 0, 131072, 1179662, 0, 131072, 1179663, 0, 131072, 1179664, 0, 131072, 1179665, 0, 131072, 1179666, 0, 131072, 1179667, 0, 131072, 1179668, 0, 131072, 1179669, 0, 131072, 1179670, 0, 131072, 1179671, 0, 131072, 1179672, 0, 131072, 1179673, 0, 131072, 1179674, 0, 131072, 1179675, 0, 458753, 1179676, 0, 327681, 1179677, 0, 327681, 1179678, 0, 327681, 1179679, 0, 327681, 1179680, 0, 327682 )
+
 [node name="Chain" parent="." instance=ExtResource( 2 )]
+chain_size = 10
 
-[node name="Block2" parent="." groups=[
-"ground",
-] instance=ExtResource( 1 )]
-position = Vector2( 468.026, 292.787 )
-scale = Vector2( 20, 1 )
-
-[node name="Block" parent="." groups=[
-"ground",
-] instance=ExtResource( 1 )]
-position = Vector2( 328.436, 174.802 )
+[node name="Sprite" parent="." instance=ExtResource( 5 )]
+position = Vector2( 255.791, 144.413 )
