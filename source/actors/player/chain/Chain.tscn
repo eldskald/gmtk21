@@ -16,7 +16,7 @@ player_1 = ExtResource( 3 )
 player_2 = ExtResource( 4 )
 blue = Color( 0.643137, 0.921569, 0.952941, 1 )
 orange = Color( 1, 0.937255, 0.627451, 1 )
-softness = 0.1
+softness = 0.0
 
 [node name="Line" type="Line2D" parent="."]
 width = 2.0
