@@ -43,13 +43,13 @@ shader_param/noise_texture_1 = SubResource( 3 )
 shader_param/noise_texture_2 = SubResource( 5 )
 
 [sub_resource type="ConvexPolygonShape2D" id=7]
-points = PoolVector2Array( 16, 12, 0, 12, 0, 3, 16, 3 )
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=8]
-points = PoolVector2Array( 16, 12, 0, 12, 0, 3, 16, 3 )
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=9]
-points = PoolVector2Array( 16, 12, 0, 12, 0, 3, 16, 3 )
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
 [sub_resource type="TileSet" id=10]
 0/name = "base_platform.png 0"
