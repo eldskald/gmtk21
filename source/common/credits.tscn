@@ -102,14 +102,14 @@ margin_bottom = 288.0
 alignment = 1
 
 [node name="Label3" type="Label" parent="MarginContainer/VBoxContainer2"]
-margin_top = 79.0
-margin_right = 512.0
-margin_bottom = 209.0
+margin_top = 71.0
+margin_right = 496.0
+margin_bottom = 201.0
 custom_fonts/font = SubResource( 5 )
-text = "BGM BY YD
+text = "Music by YD.
  
-DEATHSOUND BY KENNEY
+Death sound by Kenney.
 
-WINNING SOUND BY DKLON
+Winning sound by Dklon.
 
-USERS OF OPENGAMEART"
+Users of opengameart."
