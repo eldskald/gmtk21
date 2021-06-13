@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://actors/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/background.png" type="Texture" id=2]
+[ext_resource path="res://assets/font/Retroscape.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -26,7 +27,29 @@ noise = SubResource( 2 )
 shader = SubResource( 1 )
 shader_param/noise_texture = SubResource( 3 )
 
+[sub_resource type="DynamicFont" id=6]
+size = 18
+font_data = ExtResource( 3 )
+
 [sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=8]
+resource_name = "FadeIN"
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/CenterContainer/VBoxContainer/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.0588235 ), Color( 1, 1, 1, 0.184314 ), Color( 1, 1, 1, 0.447059 ), Color( 1, 1, 1, 0.611765 ), Color( 1, 1, 1, 0.843137 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Main" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -55,28 +78,29 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
-margin_left = 179.0
-margin_top = 115.0
-margin_right = 333.0
-margin_bottom = 172.0
+margin_left = 124.0
+margin_top = 104.0
+margin_right = 387.0
+margin_bottom = 183.0
 alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_right = 154.0
-margin_bottom = 14.0
-text = "Titulo"
+margin_right = 263.0
+margin_bottom = 27.0
+custom_fonts/font = SubResource( 6 )
+text = "VEIL OF THE MIND"
 align = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 18.0
-margin_right = 154.0
-margin_bottom = 57.0
+margin_top = 31.0
+margin_right = 263.0
+margin_bottom = 79.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/CenterContainer/VBoxContainer/VBoxContainer"]
-margin_right = 154.0
+margin_right = 263.0
 margin_bottom = 21.0
 custom_styles/separator = SubResource( 5 )
 custom_constants/separation = 21
@@ -85,29 +109,34 @@ __meta__ = {
 }
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/CenterContainer/VBoxContainer/VBoxContainer"]
-visible = false
 margin_top = 25.0
-margin_right = 154.0
-margin_bottom = 40.0
+margin_right = 263.0
+margin_bottom = 48.0
 custom_styles/separator = SubResource( 5 )
-custom_constants/separation = 15
+custom_constants/separation = 23
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Text" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/VBoxContainer"]
-margin_top = 25.0
-margin_right = 154.0
-margin_bottom = 39.0
-text = "Press any button to play"
+visible = false
+margin_top = 52.0
+margin_right = 269.0
+margin_bottom = 76.0
+custom_fonts/font = SubResource( 7 )
+text = "PRESS ANY BUTTON"
 align = 1
 valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="IntroTimer" type="Timer" parent="."]
+
 [node name="TextTimer" type="Timer" parent="."]
 wait_time = 0.2
-autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/FadeIN = SubResource( 8 )
 
 [connection signal="timeout" from="TextTimer" to="." method="_on_TextTimer_timeout"]
