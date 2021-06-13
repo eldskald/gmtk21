@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 LevelsHolder="*res://actors/Main/LevelsHolder.tscn"
+Bgm="*res://actors/Main/BGM.tscn"
 
 [display]
 

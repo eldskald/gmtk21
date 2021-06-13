@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/phaseJump3.mp3-bc4a87c4bc87275f4e2c615b5651969e.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/phaseJump3.mp3"
+dest_files=[ "res://.import/phaseJump3.mp3-bc4a87c4bc87275f4e2c615b5651969e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

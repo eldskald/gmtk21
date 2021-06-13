@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/powerUp11.mp3-bced7de4d4ff2dccf1b1a0401f3c4c60.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/powerUp11.mp3"
+dest_files=[ "res://.import/powerUp11.mp3-bced7de4d4ff2dccf1b1a0401f3c4c60.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

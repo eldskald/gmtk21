@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/zapThreeToneDown.mp3-f4ea2c3fea0adbedaad4634a961404f5.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/zapThreeToneDown.mp3"
+dest_files=[ "res://.import/zapThreeToneDown.mp3-f4ea2c3fea0adbedaad4634a961404f5.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

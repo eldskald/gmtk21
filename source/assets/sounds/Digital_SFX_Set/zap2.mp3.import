@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/zap2.mp3-45305dfb43c7a1f490aab3c93b71e3f2.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/zap2.mp3"
+dest_files=[ "res://.import/zap2.mp3-45305dfb43c7a1f490aab3c93b71e3f2.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/lowRandom.mp3-587357943edefa87e175a743d743b8e4.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/lowRandom.mp3"
+dest_files=[ "res://.import/lowRandom.mp3-587357943edefa87e175a743d743b8e4.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

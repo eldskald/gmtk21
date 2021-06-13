@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/laser6.mp3-15d92343f73eef9785b9e7dbdd9232fb.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/laser6.mp3"
+dest_files=[ "res://.import/laser6.mp3-15d92343f73eef9785b9e7dbdd9232fb.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

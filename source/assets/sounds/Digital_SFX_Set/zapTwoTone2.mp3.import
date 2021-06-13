@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/zapTwoTone2.mp3-ddc48e3187c6d7b12ea4178a384805bd.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/zapTwoTone2.mp3"
+dest_files=[ "res://.import/zapTwoTone2.mp3-ddc48e3187c6d7b12ea4178a384805bd.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/lowThreeTone.mp3-99855f660d3fa4f908aa3db22c699040.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/lowThreeTone.mp3"
+dest_files=[ "res://.import/lowThreeTone.mp3-99855f660d3fa4f908aa3db22c699040.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

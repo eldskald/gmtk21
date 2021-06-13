@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/highDown.mp3-a1f19e7b9788ff3b681199500d95d6ab.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/highDown.mp3"
+dest_files=[ "res://.import/highDown.mp3-a1f19e7b9788ff3b681199500d95d6ab.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

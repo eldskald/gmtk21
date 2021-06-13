@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/lowDown.mp3-937654be583ff21e05ffe02e3dc14e59.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/lowDown.mp3"
+dest_files=[ "res://.import/lowDown.mp3-937654be583ff21e05ffe02e3dc14e59.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

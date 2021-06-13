@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/threeTone1.mp3-0bc6e15bebcbfdc65e108f7add2b8537.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Digital_SFX_Set/threeTone1.mp3"
+dest_files=[ "res://.import/threeTone1.mp3-0bc6e15bebcbfdc65e108f7add2b8537.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
