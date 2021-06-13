@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/textures/base_platform.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 color_1: hint_color;
+uniform vec4 color_2: hint_color;
+uniform sampler2D noise_texture_1;
+uniform sampler2D noise_texture_2;
+
+void fragment() {
+	float noise_1 = texture(noise_texture_1, SCREEN_UV + TIME * vec2(0.02, 0.01)).x;
+	float noise_2 = texture(noise_texture_2, SCREEN_UV + TIME * vec2(0.01, -0.02)).x;
+	float base = 1.0 - texture(TEXTURE, UV).x * texture(TEXTURE, UV).a;
+	vec4 color = vec4(0.0);
+	
+	color = noise_2 > base  ? color_1 : color;
+	color = noise_1 * 0.6 > base ? color_2 : color;
+	
+	COLOR = color + (noise_1 > 0.5 && noise_2 > 0.5 ? vec4(0.2, 0.2, 0.2, 0.0) : vec4(0.0));
+}"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+seed = 2
+
+[sub_resource type="NoiseTexture" id=3]
+seamless = true
+noise = SubResource( 2 )
+
+[sub_resource type="OpenSimplexNoise" id=4]
+
+[sub_resource type="NoiseTexture" id=5]
+seamless = true
+noise = SubResource( 4 )
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 1 )
+shader_param/color_1 = Color( 0.576471, 0.196078, 0.619608, 1 )
+shader_param/color_2 = Color( 0.858824, 0.615686, 0.886275, 1 )
+shader_param/noise_texture_1 = SubResource( 3 )
+shader_param/noise_texture_2 = SubResource( 5 )
+
+[sub_resource type="ConvexPolygonShape2D" id=7]
+points = PoolVector2Array( 16, 12, 0, 12, 0, 3, 16, 3 )
+
+[sub_resource type="ConvexPolygonShape2D" id=8]
+points = PoolVector2Array( 16, 12, 0, 12, 0, 3, 16, 3 )
+
+[sub_resource type="ConvexPolygonShape2D" id=9]
+points = PoolVector2Array( 16, 12, 0, 12, 0, 3, 16, 3 )
+
+[sub_resource type="TileSet" id=10]
+0/name = "base_platform.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 48, 16 )
+0/tile_mode = 1
+0/autotile/bitmask_mode = 1
+0/autotile/bitmask_flags = [ Vector2( 0, 0 ), 48, Vector2( 1, 0 ), 56, Vector2( 2, 0 ), 24 ]
+0/autotile/icon_coordinate = Vector2( 1, 0 )
+0/autotile/tile_size = Vector2( 16, 16 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 7 )
+0/shape_one_way = true
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": true,
+"one_way_margin": 1.0,
+"shape": SubResource( 7 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 0 ),
+"one_way": true,
+"one_way_margin": 1.0,
+"shape": SubResource( 8 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 0 ),
+"one_way": true,
+"one_way_margin": 1.0,
+"shape": SubResource( 9 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[node name="Platform" type="TileMap"]
+material = SubResource( 6 )
+tile_set = SubResource( 10 )
+cell_size = Vector2( 16, 16 )
+format = 1
