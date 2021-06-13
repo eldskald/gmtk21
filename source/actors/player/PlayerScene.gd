@@ -53,7 +53,19 @@ func _integrate_forces(state) -> void:
 			elif move_direction.x != 0:
 				next_state = MOVING
 			elif !is_on_ground:
-				next_state = JUMPING
+				next_state = AIRBORNE
+		
+#			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
+#				grab()
+#				return
+#			else:
+#				if is_on_ground and Input.is_action_just_pressed(scheme[JUMP]):
+#					jump()
+#				elif is_on_ground and move_direction.x != 0:
+#					next_state = MOVING
+#				elif !is_on_ground:
+#					next_state = AIRBORNE
+			
 		MOVING:
 			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 				grab()
@@ -71,12 +83,25 @@ func _integrate_forces(state) -> void:
 				next_state = IDLE
 			elif !is_on_ground:
 				next_state = AIRBORNE
+			
+#			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
+#				grab()
+#				return
+#			elif is_on_ground:
+#				add_central_force(Vector2(move_direction.x * HORIZONTAL_ACCELERATION * mass, 0))
+#				if Input.is_action_just_pressed(scheme[JUMP]):
+#					jump()
+#				elif move_direction.x == 0:
+#					next_state = IDLE
+#			else:
+#				next_state = AIRBORNE
+		
 		JUMPING:
 			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 				grab()
 				return
 			elif Input.is_action_just_released(scheme[JUMP]):
-				self.linear_velocity.y /= 16
+				apply_central_impulse(Vector2(0, state.linear_velocity.y * 3 / 4) * mass)
 			elif !is_on_ground:
 				if self.linear_velocity.y > 0:
 					next_state = AIRBORNE
@@ -89,8 +114,21 @@ func _integrate_forces(state) -> void:
 					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY/2
 			else:
 				next_state = IDLE
+			
+#			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
+#				grab()
+#				return
+#			elif !is_on_ground:
+#				add_central_force(Vector2(move_direction.x * HORIZONTAL_ACCELERATION * mass / 2, 0))
+#				if Input.is_action_just_released(scheme[JUMP]) and linear_velocity.y < 0:
+#					apply_central_impulse(Vector2(0, linear_velocity.y * 3 / 4))
+#					next_state = AIRBORNE
+#				elif linear_velocity.y >= 0:
+#					next_state = AIRBORNE
+#			else:
+#				next_state = MOVING
+		
 		AIRBORNE:
-			self.gravity_scale = 6
 			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 				grab()
 				return
@@ -103,9 +141,16 @@ func _integrate_forces(state) -> void:
 				elif abs(state.linear_velocity.x) >= MAX_HORIZONTAL_VELOCITY:
 					state.linear_velocity.x = sign(state.linear_velocity.x)*MAX_HORIZONTAL_VELOCITY
 			else:
-				self.gravity_scale = 1
 				next_state = IDLE
-		
+			
+#			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
+#				grab()
+#				return
+#			elif !is_on_ground:
+#				add_central_force(Vector2(move_direction.x * HORIZONTAL_ACCELERATION * mass / 2, 0))
+#			else:
+#				next_state = MOVING
+
 		CUTSCENE:
 			self.call_deferred("set_mode",MODE_STATIC)
 			pass

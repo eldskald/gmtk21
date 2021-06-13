@@ -39,8 +39,8 @@ export(Color) var orange
 
 var pinjoints_array = []
 
-var softness = 0.2
-var bias = 0.9
+export (float) var softness = 0.2
+export (float) var bias = 0.9
 
 func _ready():
 	var player_1_node = player_1.instance()

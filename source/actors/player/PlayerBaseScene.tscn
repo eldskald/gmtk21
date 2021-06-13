@@ -1,34 +1,39 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://actors/player/PlayerScene.gd" type="Script" id=1]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 3.30299 )
+[sub_resource type="PhysicsMaterial" id=1]
+rough = true
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 4.79486, 3.26497 )
+extents = Vector2( 10, 3.30299 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 7.08087, 6.3516 )
+extents = Vector2( 4.79486, 3.26497 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 9.72954, 6.61646 )
+extents = Vector2( 7.08087, 6.3516 )
 
 [sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 9.72954, 6.61646 )
+
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 10, 2.64348 )
 
 [node name="PlayerScene" type="RigidBody2D"]
 collision_layer = 0
 collision_mask = 0
 mode = 2
+physics_material_override = SubResource( 1 )
+gravity_scale = 5.0
 contacts_reported = 5
 contact_monitor = true
 script = ExtResource( 1 )
 scheme_model = 1
 MAX_HORIZONTAL_VELOCITY = 200.0
-JUMP_ACCELERATION = 1000.0
-HORIZONTAL_ACCELERATION = 600.0
-HORIZONTAL_DEACCELERATION = 1000.0
+JUMP_ACCELERATION = 750.0
+HORIZONTAL_ACCELERATION = 300.0
+HORIZONTAL_DEACCELERATION = 600.0
 
 [node name="Footstool" type="Area2D" parent="."]
 position = Vector2( 0.264877, -10.2 )
@@ -39,29 +44,29 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Footstool"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="GroundDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundDetector"]
 position = Vector2( -0.26487, 9.05946 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="JumpTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="WallDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetector"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="CeilingDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingDetector"]
 position = Vector2( 0, -7.15137 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [connection signal="body_entered" from="Footstool" to="." method="_on_Footstool_body_entered"]
