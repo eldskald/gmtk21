@@ -2,19 +2,19 @@
 
 [ext_resource path="res://actors/player/PlayerScene.gd" type="Script" id=1]
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 3.30299 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 4.79486, 3.26497 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 7.08087, 6.3516 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 9.72954, 6.61646 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 10, 2.64348 )
 
 [node name="PlayerScene" type="RigidBody2D"]
@@ -38,29 +38,29 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Footstool"]
-shape = SubResource( 5 )
+shape = SubResource( 1 )
 
 [node name="GroundDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundDetector"]
 position = Vector2( -0.26487, 9.05946 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="JumpTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 
 [node name="WallDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetector"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="CeilingDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingDetector"]
 position = Vector2( 0, -7.15137 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [connection signal="body_entered" from="Footstool" to="." method="_on_Footstool_body_entered"]

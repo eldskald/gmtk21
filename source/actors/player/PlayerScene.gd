@@ -23,6 +23,8 @@ onready var next_state: int = IDLE
 onready var active : bool = true
 onready var scheme = player_schemes[scheme_model]
 
+var grab_released:= true
+
 func _integrate_forces(state) -> void:
 	var is_on_ground = check_ground()
 	var move_direction = get_move_direction()
@@ -30,7 +32,7 @@ func _integrate_forces(state) -> void:
 	
 	match next_state:
 		IDLE:
-			if can_grab() and Input.is_action_just_pressed(scheme[GRAB]):
+			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 				grab()
 				return
 			elif is_on_ground and Input.is_action_just_pressed(scheme[JUMP]):
@@ -40,12 +42,12 @@ func _integrate_forces(state) -> void:
 				state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION*(-sign(state.linear_velocity.x))*mass, 0))
 				if abs(state.linear_velocity.x) < 3:
 					state.linear_velocity.x = 0
-			if move_direction.x != 0:
+			elif move_direction.x != 0:
 				next_state = MOVING
 			elif !is_on_ground:
 				next_state = JUMPING
 		MOVING:
-			if can_grab() and Input.is_action_just_pressed(scheme[GRAB]):
+			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 				grab()
 				return
 			elif move_direction.x != 0 and is_on_ground:
@@ -62,12 +64,12 @@ func _integrate_forces(state) -> void:
 			elif !is_on_ground:
 				next_state = AIRBORNE
 		JUMPING:
-			if can_grab() and Input.is_action_just_pressed(scheme[GRAB]):
+			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 				grab()
 				return
 			elif Input.is_action_just_released(scheme[JUMP]):
 				self.linear_velocity.y /= 16
-			if !is_on_ground:
+			elif !is_on_ground:
 				if self.linear_velocity.y > 0:
 					next_state = AIRBORNE
 				elif (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
@@ -81,10 +83,10 @@ func _integrate_forces(state) -> void:
 				next_state = IDLE
 		AIRBORNE:
 			self.gravity_scale = 6
-			if can_grab() and Input.is_action_just_pressed(scheme[GRAB]):
+			if can_grab() and Input.is_action_pressed(scheme[GRAB]):
 				grab()
 				return
-			if !is_on_ground:
+			elif !is_on_ground:
 				if (move_direction.x == 0 and state.linear_velocity.x != 0) or (sign(state.linear_velocity.x) != move_direction.x and move_direction.x != 0):
 					state.add_central_force(Vector2(-self.applied_force.x, 0))
 					state.add_central_force(Vector2(HORIZONTAL_DEACCELERATION/2*(-sign(state.linear_velocity.x))*mass, 0))
@@ -109,6 +111,9 @@ func _input(event):
 		print("RELEASE")
 		next_state = IDLE
 		self.call_deferred("set_mode",MODE_CHARACTER)
+		grab_released = false
+	elif event.is_action_pressed(scheme[GRAB]) and !event.is_echo():
+		grab_released = true
 
 func grab():
 	print("GRAB")
@@ -121,7 +126,7 @@ func jump(mod :int = 1):
 	next_state = JUMPING
 
 func can_grab() -> bool:
-	return check_ground() or check_walls() or check_ceiling()
+	return (check_ground() or check_walls() or check_ceiling()) and grab_released
 
 func check_ground() -> bool:
 	for body in $GroundDetector.get_overlapping_bodies():
