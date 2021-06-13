@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/sounds/Digital_SFX_Set/spaceTrash4.mp3" type="AudioStream" id=1]
+[ext_resource path="res://assets/sounds/Dklon/engine_takeoff.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/music/BMGS.ogg" type="AudioStream" id=3]
+
+[node name="SoundList" type="Node"]
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
+bus = "BGM"
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "SFX"
+
+[node name="WinSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -21.624
+bus = "SFX"

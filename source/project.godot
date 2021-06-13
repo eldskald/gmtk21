@@ -11,13 +11,13 @@ config_version=4
 [application]
 
 config/name="gmtk21"
-run/main_scene="res://actors/Main/Main.tscn"
+run/main_scene="res://common/main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-LevelsHolder="*res://actors/Main/LevelsHolder.tscn"
-Bgm="*res://actors/Main/BGM.tscn"
+LevelsHolder="*res://common/levels_holder.tscn"
+Bgm="*res://common/sound_list.tscn"
 
 [debug]
 
